@@ -1,0 +1,836 @@
+if not game:IsLoaded()then game.Loaded:Wait()end local a=[[https://raw.githubusercontent.com/Xyraniz/VaultUI/refs/heads/main/Libraries/Armenta-Lib/source.lua]]
+local b='Forge Z v1'local c='Z-RAGE'local d=126050049239509 local e='rbxthumb://type=Asset&id='..tostring(d)..'&w=420&h=420'local f=9079004979 local g=
+'rbxassetid://'..tostring(f)local h=Enum.KeyCode.RightControl local i=250000 local j=3.5 local k=1.6 local l=9 local m=120 local n=90000 local o=0.06 local p=
+game:GetService('Players')local q=game:GetService('RunService')local r=game:GetService('UserInputService')local s=game:GetService('Lighting')local t=game:
+GetService('HttpService')local u=game:GetService('TeleportService')local v=game:GetService('MarketplaceService')local w=game:GetService('GuiService')local x=
+game:GetService('CoreGui')local y=game:GetService('StarterGui')local z=game:GetService('TextChatService')local A=game:GetService('VirtualUser')local B=game:
+GetService('TextService')local C=game:GetService('TweenService')local D=game:GetService('ContentProvider')local E=game:GetService('SoundService')local F=utf8.
+char(0xe000)local G={Background=Color3.fromRGB(2,7,10),Topbar=Color3.fromRGB(4,14,17),TopbarBorder=Color3.fromRGB(17,74,70),Accent=Color3.fromRGB(0,255,191),
+AccentLine=Color3.fromRGB(173,255,71),TextPrimary=Color3.fromRGB(235,255,252),TextSecondary=Color3.fromRGB(155,201,197),TextMuted=Color3.fromRGB(98,142,143),
+Element=Color3.fromRGB(7,25,29),ElementHover=Color3.fromRGB(11,42,45),ElementBorder=Color3.fromRGB(17,69,68),Outline=Color3.fromRGB(0,230,178),ToggleOn=Color3.
+fromRGB(0,255,191),ToggleOff=Color3.fromRGB(13,53,55),ToggleKnob=Color3.fromRGB(238,255,251),Border=Color3.fromRGB(14,59,61),ScrollBar=Color3.fromRGB(0,188,150)
+,Shadow=Color3.fromRGB(0,0,0),Sidebar=Color3.fromRGB(2,13,16),SidebarText=Color3.fromRGB(117,171,168),SidebarTextActive=Color3.fromRGB(228,255,250),TabActive=
+Color3.fromRGB(7,36,39),TabHover=Color3.fromRGB(10,48,50),Font=Enum.Font.BuilderSans,FontBold=Enum.Font.BuilderSansBold,CornerRadius=10}local H=p.LocalPlayer
+local function I(J,K)local function L()if J and J.Parent and type(K)=='function'then K(J.IsLoaded)end end local M=J:GetPropertyChangedSignal('IsLoaded'):
+Connect(L)task.spawn(function()pcall(D.PreloadAsync,D,{J})L()end)L()return M end local function J()local K,L=pcall(function()if type(getgenv)=='function'then
+return getgenv()end return getfenv()end)return K and type(L)=='table'and L or _G end local K=J()local L={}K.__ForgeUniversalExecutionToken=L local function M(N)
+local O=rawget(K,N)if type(O)=='function'then return O end local P,Q=pcall(function()return getfenv()[N]end)return P and type(Q)=='function'and Q or nil end
+local function N(O)O=tostring(O or'')if O==''then return end local P=false for Q,R in ipairs({'openurl','open_url','openbrowser','open_browser'})do local S=M(R)
+if S then P=pcall(S,O)if P then break end end end if not P then P=pcall(function()w:OpenBrowserWindow(O)end)end local Q=M('setclipboard')or M('toclipboard')
+local R=Q and pcall(Q,O)or false pcall(y.SetCore,y,'SendNotification',{Title='Z-RAGE Community',Text=P and'Discord invite opened.'or R and
+'Discord invite copied to your clipboard.'or O,Duration=4})end local O=M('loadstring')assert(O,'Forge Z v1 requires an executor with loadstring support')local P
+=rawget(K,'__ForgeUniversalDeveloperHub')if type(P)=='table'and type(P.Destroy)=='function'then pcall(P.Destroy,P)end local Q=rawget(K,'__ForgeUniversalKeyGate'
+)if type(Q)=='table'and type(Q.Destroy)=='function'then pcall(Q.Destroy,Q)end local R=game:HttpGet(a)local S,T=O(R,'@Armenta-Lib')assert(S,
+'Could not compile Armenta-Lib: '..tostring(T))local U=S()local function V(W,X)if not W.Title or not W.TitleAccent then return end local Y=W.TitleAccent.
+Position.X.Offset W._refreshTitle=function()if W._destroyed or not W.Title or not W.TitleAccent then return end local Z=tostring(W._titleText or'')local _=
+tostring(X or'')local aa=''if _~=''and Z:sub(1,#_)==_ then aa=Z:sub(#_+1):gsub('^%s+','')end if _==''or aa==''then W._titleBranded=false W.TitleAccent.Visible=
+false W.Title.Text=Z W.Title.Position=UDim2.fromOffset(Y,0)W.Title.Size=UDim2.new(1,-(Y+40),1,0)return end local ab=B:GetTextSize(_,17,Enum.Font.
+BuilderSansExtraBold,Vector2.new(300,W.Theme.TopbarHeight)).X W._titleBranded=true W.TitleAccent.Visible=true W.TitleAccent.Text=_ W.TitleAccent.Size=UDim2.
+fromOffset(ab+2,W.Theme.TopbarHeight)W.Title.Text=aa W.Title.Position=UDim2.fromOffset(Y+ab+5,0)W.Title.Size=UDim2.new(1,-(Y+ab+45),1,0)end W._refreshTitle()end
+local function aa(ab)if ab._forgeVisuals then return ab._forgeVisuals end if not ab.Frame or not ab.Gui then return nil end local W={Menu=ab,Exiting=false,
+Shaking=false}ab._forgeVisuals=W local X=ab.Frame local Y=ab.Theme local Z=Instance.new('UIGradient')Z.Name='ForgeSurfaceGradient'Z.Color=ColorSequence.new({
+ColorSequenceKeypoint.new(0,Y.Background),ColorSequenceKeypoint.new(0.48,Y.Background:Lerp(Y.Element,0.22)),ColorSequenceKeypoint.new(1,Y.Background:Lerp(Color3
+.fromRGB(20,37,68),0.28))})Z.Rotation=118 Z.Offset=Vector2.new(-0.08,0)Z.Parent=X C:Create(Z,TweenInfo.new(5.8,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,
+-1,true),{Offset=Vector2.new(0.08,0)}):Play()local _=X:FindFirstChildOfClass('UIStroke')if _ then _.Color=Color3.new(1,1,1)_.Thickness=1.35 _.Transparency=0.08
+local ac=Instance.new('UIGradient')ac.Name='ForgeBorderGradient'ac.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Y.Accent),ColorSequenceKeypoint.new(0.32
+,Color3.fromRGB(58,162,255)),ColorSequenceKeypoint.new(0.66,Y.AccentLine),ColorSequenceKeypoint.new(1,Y.Accent)})ac.Rotation=0 ac.Parent=_ C:Create(ac,TweenInfo
+.new(4.5,Enum.EasingStyle.Linear,Enum.EasingDirection.InOut,-1),{Rotation=360}):Play()end local ac=Instance.new('Frame')ac.Name='ForgeAura'ac.BackgroundColor3=Y
+.Accent ac.BackgroundTransparency=1 ac.BorderSizePixel=0 ac.Active=false ac.ZIndex=0 ac.Parent=ab.Gui local ad=Instance.new('UICorner')ad.CornerRadius=UDim.new(
+0,Y.CornerRadius+8)ad.Parent=ac local ae=Instance.new('UIGradient')ae.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Y.Accent),ColorSequenceKeypoint.new(
+0.5,Color3.fromRGB(42,111,255)),ColorSequenceKeypoint.new(1,Y.AccentLine)})ae.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,0.25),
+NumberSequenceKeypoint.new(0.5,0.7),NumberSequenceKeypoint.new(1,0.25)})ae.Parent=ac local af=Instance.new('UIStroke')af.Color=Y.Accent af.Thickness=1.1 af.
+Transparency=0.58 af.Parent=ac C:Create(af,TweenInfo.new(1.25,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{Transparency=0.82,Thickness=1.55,Color=
+Y.AccentLine}):Play()C:Create(ae,TweenInfo.new(5.5,Enum.EasingStyle.Linear,Enum.EasingDirection.InOut,-1),{Rotation=360}):Play()local ag=Instance.new('UIScale')
+ag.Name='ForgeAuraScale'ag.Scale=1 ag.Parent=ac local ah local function ai()if not X.Parent or not ac.Parent then return end local aj=X.Position local ak=X.Size
+local al=X.AnchorPoint local am=ab._uiScale and ab._uiScale.Scale or 1 local an=3 ac.AnchorPoint=al ac.Position=UDim2.new(aj.X.Scale,aj.X.Offset+an*(al.X*2-1),
+aj.Y.Scale,aj.Y.Offset+an*(al.Y*2-1))ac.Size=UDim2.new(ak.X.Scale,ak.X.Offset+an*2,ak.Y.Scale,ak.Y.Offset+an*2)ag.Scale=am if ab._shadow and ab._shadow.Parent
+then local ao=8 ab._shadow.AnchorPoint=al ab._shadow.Position=UDim2.new(aj.X.Scale,aj.X.Offset+ao*(al.X*2-1),aj.Y.Scale,aj.Y.Offset+ao*(al.Y*2-1)+4)ab._shadow.
+Size=UDim2.new(ak.X.Scale,ak.X.Offset+ao*2,ak.Y.Scale,ak.Y.Offset+ao*2)ab._shadow.BackgroundTransparency=0.74 if not ah or not ah.Parent then ah=ab._shadow:
+FindFirstChild('ForgeShadowScale')if not ah then ah=Instance.new('UIScale')ah.Name='ForgeShadowScale'ah.Parent=ab._shadow end end ah.Scale=am end end ab.
+_updateShadow=ai ai()X:GetPropertyChangedSignal('Position'):Connect(ai)X:GetPropertyChangedSignal('Size'):Connect(ai)X:GetPropertyChangedSignal('AnchorPoint'):
+Connect(ai)if ab._uiScale then ab._uiScale:GetPropertyChangedSignal('Scale'):Connect(ai)end task.defer(ai)if ab.Topbar then ab.Topbar.ClipsDescendants=true
+local aj=Instance.new('TextLabel')aj.Name='ForgeModeBadge'aj.Size=UDim2.fromOffset(106,22)aj.Position=UDim2.new(1,-250,0.5,-11)aj.BackgroundColor3=Y.Accent aj.
+BackgroundTransparency=0.9 aj.BorderSizePixel=0 aj.Text='Z-RAGE // LOCAL'aj.Font=Enum.Font.BuilderSansBold aj.TextSize=11 aj.TextColor3=Y.Accent aj.ZIndex=2 aj.
+Parent=ab.Topbar local ak=Instance.new('UICorner')ak.CornerRadius=UDim.new(1,0)ak.Parent=aj local al=Instance.new('UIStroke')al.Color=Y.Accent al.Transparency=
+0.6 al.Parent=aj C:Create(aj,TweenInfo.new(1.1,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{TextColor3=Y.AccentLine,BackgroundTransparency=0.78}):
+Play()end if ab.Sidebar then local aj=Instance.new('UIGradient')aj.Name='ForgeSidebarGradient'aj.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Y.Sidebar)
+,ColorSequenceKeypoint.new(0.55,Y.Sidebar:Lerp(Y.Element,0.35)),ColorSequenceKeypoint.new(1,Y.Sidebar:Lerp(Y.Accent,0.08))})aj.Rotation=90 aj.Offset=Vector2.
+new(0,-0.12)aj.Parent=ab.Sidebar C:Create(aj,TweenInfo.new(4.2,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{Offset=Vector2.new(0,0.12)}):Play()end
+if ab.AccentLine then ab.AccentLine.BackgroundColor3=Color3.new(1,1,1)local aj=Instance.new('UIGradient')aj.Name='ForgeAccentGradient'aj.Color=ColorSequence.
+new({ColorSequenceKeypoint.new(0,Y.Accent),ColorSequenceKeypoint.new(0.5,Y.AccentLine),ColorSequenceKeypoint.new(1,Y.Accent)})aj.Offset=Vector2.new(-1,0)aj.
+Parent=ab.AccentLine C:Create(aj,TweenInfo.new(1.8,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{Offset=Vector2.new(1,0)}):Play()end if ab.
+ActiveBar then C:Create(ab.ActiveBar,TweenInfo.new(0.85,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{BackgroundColor3=Y.AccentLine,
+BackgroundTransparency=0.22}):Play()end if ab.ContentArea then local aj=Instance.new('Frame')aj.Name='ForgeParticles'aj.Size=UDim2.fromScale(1,1)aj.
+BackgroundTransparency=1 aj.BorderSizePixel=0 aj.Active=false aj.ClipsDescendants=true aj.ZIndex=0 aj.Parent=ab.ContentArea local ak=Instance.new('Frame')ak.
+Name='ForgeScanLine'ak.Size=UDim2.new(0,2,1,0)ak.Position=UDim2.fromScale(-0.05,0)ak.BackgroundColor3=Y.Accent ak.BackgroundTransparency=0.72 ak.BorderSizePixel
+=0 ak.ZIndex=0 ak.Parent=aj local al=Instance.new('UIGradient')al.Rotation=90 al.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,1),
+NumberSequenceKeypoint.new(0.5,0.15),NumberSequenceKeypoint.new(1,1)})al.Parent=ak C:Create(ak,TweenInfo.new(3.2,Enum.EasingStyle.Sine,Enum.EasingDirection.
+InOut,-1,false,0.4),{Position=UDim2.fromScale(1.05,0)}):Play()local am=Random.new()for an=1,14 do local ao=Instance.new('Frame')ao.Name='Particle'..an local ap=
+am:NextInteger(2,5)ao.Size=UDim2.fromOffset(ap,ap)ao.BackgroundColor3=an%3==0 and Y.AccentLine or Y.Accent ao.BackgroundTransparency=am:NextNumber(0.35,0.7)ao.
+BorderSizePixel=0 ao.ZIndex=0 ao.Parent=aj local aq=Instance.new('UICorner')aq.CornerRadius=UDim.new(1,0)aq.Parent=ao task.spawn(function()task.wait(am:
+NextNumber(0,1.2))while not ab._destroyed and ao.Parent do local ar=am:NextNumber(0.02,0.98)local as=am:NextNumber(-0.12,0.12)ao.Position=UDim2.fromScale(ar,
+1.06)ao.BackgroundTransparency=am:NextNumber(0.32,0.68)local at=C:Create(ao,TweenInfo.new(am:NextNumber(3.8,7.2),Enum.EasingStyle.Linear),{Position=UDim2.
+fromScale(math.clamp(ar+as,0,1),-0.08),BackgroundTransparency=0.94})at:Play()at.Completed:Wait()end end)end end local function aj(ak)if ak:GetAttribute(
+'ForgeAnimated')or ak:IsDescendantOf(ab.Topbar)then return end ak:SetAttribute('ForgeAnimated',true)local al=Instance.new('UIScale')al.Name='ForgeHoverScale'al.
+Scale=1 al.Parent=ak local am=Instance.new('UIStroke')am.Name='ForgeHoverStroke'am.ApplyStrokeMode=Enum.ApplyStrokeMode.Border am.Color=Y.Accent am.Thickness=1
+am.Transparency=1 am.Parent=ak ak.MouseEnter:Connect(function()C:Create(al,TweenInfo.new(0.16,Enum.EasingStyle.Back),{Scale=1.018}):Play()C:Create(am,TweenInfo.
+new(0.16),{Transparency=0.38}):Play()end)ak.MouseLeave:Connect(function()C:Create(al,TweenInfo.new(0.18,Enum.EasingStyle.Quad),{Scale=1}):Play()C:Create(am,
+TweenInfo.new(0.18),{Transparency=1}):Play()end)ak.MouseButton1Down:Connect(function()C:Create(al,TweenInfo.new(0.06,Enum.EasingStyle.Quad),{Scale=0.965}):Play(
+)end)ak.MouseButton1Up:Connect(function()C:Create(al,TweenInfo.new(0.16,Enum.EasingStyle.Back),{Scale=1.018}):Play()end)ak.Activated:Connect(function()C:Create(
+am,TweenInfo.new(0.07),{Transparency=0.02,Thickness=2}):Play()task.delay(0.08,function()if am.Parent then C:Create(am,TweenInfo.new(0.28),{Transparency=1,
+Thickness=1}):Play()end end)end)end for ak,al in ipairs(X:GetDescendants())do if al:IsA('GuiButton')then aj(al)end end X.DescendantAdded:Connect(function(ak)if
+ak:IsA('GuiButton')then task.defer(aj,ak)end end)local ak=ab._uiScale and ab._uiScale.Scale or 1 local al=X.Position local am=ab._baseBackgroundTransparency or
+X.BackgroundTransparency if ab._uiScale then ab._uiScale.Scale=ak*0.84 C:Create(ab._uiScale,TweenInfo.new(0.52,Enum.EasingStyle.Back,Enum.EasingDirection.Out),{
+Scale=ak}):Play()end X.Position=al+UDim2.fromOffset(0,24)X.BackgroundTransparency=1 C:Create(X,TweenInfo.new(0.48,Enum.EasingStyle.Quart,Enum.EasingDirection.
+Out),{Position=al,BackgroundTransparency=am}):Play()if ab._shadow then ab._shadow.BackgroundTransparency=1 C:Create(ab._shadow,TweenInfo.new(0.5),{
+BackgroundTransparency=0.74}):Play()end function W:Reject()if self.Shaking or self.Exiting or ab._destroyed or not X.Parent then return end self.Shaking=true
+task.spawn(function()local an=X.Position for ao,ap in ipairs({-14,14,-9,9,-4,4,0})do local aq=C:Create(X,TweenInfo.new(0.045,Enum.EasingStyle.Linear),{Position=
+an+UDim2.fromOffset(ap,0)})aq:Play()aq.Completed:Wait()end self.Shaking=false end)end function W:Exit(an)if self.Exiting then return end self.Exiting=true if ab
+._uiScale then C:Create(ab._uiScale,TweenInfo.new(0.24,Enum.EasingStyle.Back,Enum.EasingDirection.In),{Scale=math.max(0.75,ab._uiScale.Scale*0.82)}):Play()end C
+:Create(X,TweenInfo.new(0.24,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{Position=X.Position+UDim2.fromOffset(0,28),BackgroundTransparency=1}):Play()C:
+Create(ac,TweenInfo.new(0.2),{BackgroundTransparency=1}):Play()C:Create(af,TweenInfo.new(0.2),{Transparency=1}):Play()if ab._shadow then C:Create(ab._shadow,
+TweenInfo.new(0.2),{BackgroundTransparency=1}):Play()end task.delay(0.26,function()if an then an()end end)end return W end local function ab(ac,ad,ae)local af=
+ac and ac.TextBox if not af or not af:IsA('TextBox')then return ac end if ad then af.Size=UDim2.fromOffset(ad,26)af.Position=UDim2.new(1,-ad-12,0.5,-13)if ac.
+Label then ac.Label.Size=UDim2.new(1,-ad-30,0,20)end local ag=ac.Container and ac.Container:FindFirstChild('Description')if ag and ag:IsA('TextLabel')then ag.
+Size=UDim2.new(1,-ad-30,0,16)end end af.TextScaled=true af.TextWrapped=false af.TextXAlignment=Enum.TextXAlignment.Left af.ClipsDescendants=true local ag=af:
+FindFirstChildOfClass('UITextSizeConstraint')or Instance.new('UITextSizeConstraint')ag.Name='ForgeResponsiveTextConstraint'ag.MinTextSize=ae or 8 ag.MaxTextSize
+=14 ag.Parent=af if not af:FindFirstChild('ForgeInputPadding')then local ah=Instance.new('UIPadding')ah.Name='ForgeInputPadding'ah.PaddingLeft=UDim.new(0,6)ah.
+PaddingRight=UDim.new(0,6)ah.Parent=af end return ac end local function ac(ad)local ae=ad and ad._overviewTab local af=ae and ae.Container if not af or af:
+GetAttribute('ForgeDashboardStyled')then return false end af:SetAttribute('ForgeDashboardStyled',true)af.BackgroundTransparency=1 local ag local ah for ai,aj in
+ipairs(af:GetChildren())do if aj:IsA('TextLabel')and aj.Position.Y.Offset==0 then ag=aj elseif aj:IsA('TextLabel')and aj.Position.Y.Offset==19 then ah=aj end
+end if ag then ag.Text='FORGE Z // DASHBOARD'ag.Font=Enum.Font.BuilderSansExtraBold ag.TextSize=17 ag.Position=UDim2.fromOffset(32,0)ag.Size=UDim2.new(1,-164,0,
+20)end if ah then ah.Text='Authenticated local developer session'ah.TextColor3=ad.Theme.TextSecondary ah.Position=UDim2.fromOffset(32,19)ah.Size=UDim2.new(1,-
+164,0,16)end local ai=Instance.new('ImageLabel')ai.Name='ForgeDashboardLogo'ai.Size=UDim2.fromOffset(26,26)ai.Position=UDim2.fromOffset(1,3)ai.
+BackgroundTransparency=1 ai.Image=e ai.ImageTransparency=0 ai.ScaleType=Enum.ScaleType.Fit ai.ZIndex=5 ai.Parent=af I(ai)local aj=Instance.new('TextLabel')aj.
+Name='ForgeDashboardSessionBadge'aj.AnchorPoint=Vector2.new(1,0)aj.Size=UDim2.fromOffset(118,24)aj.Position=UDim2.new(1,-2,0,3)aj.BackgroundColor3=ad.Theme.
+Accent aj.BackgroundTransparency=0.88 aj.BorderSizePixel=0 aj.Text='\u{25cf}  Z-RAGE  /  v1'aj.Font=Enum.Font.BuilderSansBold aj.TextSize=11 aj.TextColor3=ad.
+Theme.Accent aj.ZIndex=4 aj.Parent=af local ak=Instance.new('UICorner')ak.CornerRadius=UDim.new(1,0)ak.Parent=aj local al=Instance.new('UIStroke')al.Color=ad.
+Theme.Accent al.Transparency=0.52 al.Thickness=1 al.Parent=aj C:Create(al,TweenInfo.new(1.4,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{
+Transparency=0.82,Color=ad.Theme.AccentLine}):Play()local am=Instance.new('Frame')am.Name='ForgeDashboardHeaderLine'am.Size=UDim2.new(1,-4,0,2)am.Position=UDim2
+.fromOffset(2,35)am.BackgroundColor3=Color3.new(1,1,1)am.BorderSizePixel=0 am.ZIndex=3 am.Parent=af local an=Instance.new('UIGradient')an.Color=ColorSequence.
+new({ColorSequenceKeypoint.new(0,ad.Theme.Accent),ColorSequenceKeypoint.new(0.48,Color3.fromRGB(67,139,255)),ColorSequenceKeypoint.new(1,ad.Theme.AccentLine)})
+an.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,0.2),NumberSequenceKeypoint.new(0.5,0),NumberSequenceKeypoint.new(1,0.62)})an.Offset=Vector2.
+new(-0.35,0)an.Parent=am C:Create(an,TweenInfo.new(2.6,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{Offset=Vector2.new(0.35,0)}):Play()local 
+function ao(ap,aq,ar,as)if not ap or ap:GetAttribute('ForgeCardStyled')then return end ap:SetAttribute('ForgeCardStyled',true)ap.BackgroundColor3=aq ap.
+ClipsDescendants=true local at=Instance.new('UIGradient')at.Name='ForgeCardGradient'at.Color=ColorSequence.new(aq,ar)at.Rotation=112 at.Parent=ap local W=ap:
+FindFirstChildOfClass('UIStroke')if W then W.Color=Color3.new(1,1,1)W.Transparency=0.42 W.Thickness=1.15 local X=Instance.new('UIGradient')X.Name=
+'ForgeCardStrokeGradient'X.Color=ColorSequence.new(as,Color3.fromRGB(73,116,205))X.Rotation=18 X.Parent=W end local X=Instance.new('Frame')X.Name=
+'ForgeCardShine'X.Size=UDim2.new(1,-20,0,1)X.Position=UDim2.fromOffset(10,0)X.BackgroundColor3=as X.BackgroundTransparency=0.54 X.BorderSizePixel=0 X.ZIndex=ap.
+ZIndex+1 X.Parent=ap local Y=Instance.new('UIGradient')Y.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.5,0),
+NumberSequenceKeypoint.new(1,1)})Y.Parent=X local Z=Instance.new('Frame')Z.Name='ForgeCardGlow'Z.AnchorPoint=Vector2.new(0.5,0.5)Z.Size=UDim2.fromOffset(120,120
+)Z.Position=UDim2.new(1,-22,0,8)Z.BackgroundColor3=as Z.BackgroundTransparency=0.94 Z.BorderSizePixel=0 Z.Active=false Z.Parent=ap local _=Instance.new(
+'UICorner')_.CornerRadius=UDim.new(1,0)_.Parent=Z end local ap=af:FindFirstChild('Profile')local aq=af:FindFirstChild('Game')local ar=af:FindFirstChild('Server'
+)local as=af:FindFirstChild('Support')ao(ap,Color3.fromRGB(6,25,30),Color3.fromRGB(7,36,43),ad.Theme.Accent)ao(aq,Color3.fromRGB(6,22,30),Color3.fromRGB(9,28,48
+),Color3.fromRGB(55,153,255))ao(ar,Color3.fromRGB(6,24,29),Color3.fromRGB(11,37,36),ad.Theme.AccentLine)ao(as,Color3.fromRGB(15,21,42),Color3.fromRGB(24,29,58),
+Color3.fromRGB(88,101,242))if ap then local at=ap:FindFirstChild('Accent')if at then at.BackgroundColor3=Color3.new(1,1,1)local W=Instance.new('UIGradient')W.
+Color=ColorSequence.new(ad.Theme.Accent,ad.Theme.AccentLine)W.Rotation=90 W.Parent=at end local W=ap:FindFirstChild('Avatar')if W and(W:IsA('ImageLabel')or W:
+IsA('ImageButton'))then W.BackgroundColor3=Color3.fromRGB(5,17,23)local X=W:FindFirstChildOfClass('UIStroke')if X then X.Transparency=0.28 X.Thickness=1.5 end
+end for X,Y in ipairs(ap:GetChildren())do if Y:IsA('TextLabel')and Y.Text=='Ready'then Y.Text='LOCAL READY'Y.Size=UDim2.fromOffset(84,18)Y.Position=UDim2.new(1,
+-96,0,14)Y.TextColor3=ad.Theme.AccentLine end end end if as then local at=as:FindFirstChild('SupportButton')if at and at:IsA('GuiButton')then at.
+BackgroundColor3=Color3.fromRGB(70,82,210)local W=Instance.new('UIGradient')W.Name='ForgeDiscordGradient'W.Color=ColorSequence.new(Color3.fromRGB(88,101,242),
+Color3.fromRGB(0,211,166))W.Rotation=12 W.Parent=at local X=at:FindFirstChildOfClass('UIStroke')if X then X.Color=Color3.fromRGB(150,160,255)X.Transparency=0.22
+X.Thickness=1.1 end end end return true end local function ad(ae)local af=ae and ae._minFrame if not af or af:GetAttribute('ForgeLauncherStyled')then return
+false end af:SetAttribute('ForgeLauncherStyled',true)af.BackgroundColor3=Color3.fromRGB(3,11,18)af.ClipsDescendants=true local ag=af:FindFirstChild('Icon')if ag
+and ag:IsA('ImageLabel')then ag.Visible=false ag.ImageTransparency=1 end local ah=Instance.new('UIGradient')ah.Name='ForgeLauncherBackground'ah.Color=
+ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(3,11,18)),ColorSequenceKeypoint.new(0.58,Color3.fromRGB(6,26,31)),ColorSequenceKeypoint.new(1,
+Color3.fromRGB(12,19,40))})ah.Rotation=132 ah.Parent=af local ai=Instance.new('ImageLabel')ai.Name='ForgeLauncherLogo'ai.Size=UDim2.new(1,-8,1,-8)ai.Position=
+UDim2.fromOffset(4,4)ai.BackgroundTransparency=1 ai.Image=e ai.ImageTransparency=1 ai.ScaleType=Enum.ScaleType.Fit ai.ZIndex=4 ai.Parent=af local aj=false local 
+function ak(al)if not ai.Parent then return end local am=aj and 0 or 1 if al then ai.ImageTransparency=am else C:Create(ai,TweenInfo.new(0.16),{
+ImageTransparency=am}):Play()end end I(ai)ak(true)local al=Instance.new('Frame')al.Name='ForgeLauncherCornerMark'al.AnchorPoint=Vector2.new(1,1)al.Size=UDim2.
+fromOffset(7,7)al.Position=UDim2.new(1,-7,1,-7)al.BackgroundColor3=ae.Theme.AccentLine al.BackgroundTransparency=0.06 al.BorderSizePixel=0 al.ZIndex=5 al.Parent
+=af local am=Instance.new('UICorner')am.CornerRadius=UDim.new(1,0)am.Parent=al C:Create(al,TweenInfo.new(0.9,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1
+,true),{BackgroundTransparency=0.62,BackgroundColor3=ae.Theme.Accent}):Play()local an=af:FindFirstChildOfClass('UIStroke')if an then an.Thickness=2 an.
+Transparency=0.12 end ae:OnMinimizeChanged(function(ao)aj=ao ak(false)end)return true end local function ae(af)return tostring(af or''):gsub('&','&amp;'):gsub(
+'<','&lt;'):gsub('>','&gt;'):gsub('"','&quot;'):gsub("'",'&apos;')end local function af(ag)local ah=false local ai local aj local function ak()if ah then return
+end ah=true if ai then pcall(function()ai:Destroy()end)end if aj then pcall(function()aj:Stop()aj:Destroy()end)end if rawget(K,'__ForgeUniversalExecutionToken')
+==L and type(ag)=='function'then task.spawn(ag)end end task.spawn(function()local al,am=pcall(function()for al,am in ipairs({'ForgeZBootIntro',
+'ForgeZWelcomeIntro','ForgeZGoodbyeOutro'})do local an=x:FindFirstChild(am)if an then an:Destroy()end end local al=E:FindFirstChild('ForgeZBootAudio')if al then
+al:Destroy()end ai=Instance.new('ScreenGui')ai.Name='ForgeZBootIntro'ai.IgnoreGuiInset=true ai.ResetOnSpawn=false ai.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
+ai.DisplayOrder=2147483000 ai.Parent=x aj=Instance.new('Sound')aj.Name='ForgeZBootAudio'aj.SoundId=g aj.Volume=0 aj.Looped=false aj.Parent=E task.spawn(function
+()pcall(D.PreloadAsync,D,{aj})end)aj:Play()C:Create(aj,TweenInfo.new(0.35),{Volume=0.55}):Play()local am=Instance.new('Frame')am.Size=UDim2.fromScale(1,1)am.
+BackgroundColor3=Color3.fromRGB(0,4,7)am.BackgroundTransparency=1 am.BorderSizePixel=0 am.ZIndex=1 am.Parent=ai local an=Instance.new('UIGradient')an.Color=
+ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(0,5,8)),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(2,20,22)),ColorSequenceKeypoint.new(1,Color3.
+fromRGB(5,9,24))})an.Rotation=125 an.Offset=Vector2.new(-0.12,0)an.Parent=am local ao=Instance.new('Frame')ao.AnchorPoint=Vector2.new(0.5,0.5)ao.Size=UDim2.
+fromOffset(500,380)ao.Position=UDim2.fromScale(0.5,0.5)ao.BackgroundTransparency=1 ao.ZIndex=3 ao.Parent=am local ap=Instance.new('UISizeConstraint')ap.MinSize=
+Vector2.new(330,320)ap.MaxSize=Vector2.new(500,380)ap.Parent=ao local aq=Instance.new('UIScale')aq.Scale=0.72 aq.Parent=ao local ar=Instance.new('Frame')ar.
+AnchorPoint=Vector2.new(0.5,0.5)ar.Size=UDim2.fromOffset(168,168)ar.Position=UDim2.new(0.5,0,0,112)ar.BackgroundColor3=Color3.fromRGB(3,19,24)ar.
+BackgroundTransparency=1 ar.BorderSizePixel=0 ar.ZIndex=4 ar.Parent=ao local as=Instance.new('UICorner')as.CornerRadius=UDim.new(1,0)as.Parent=ar local at=
+Instance.new('UIStroke')at.Color=Color3.new(1,1,1)at.Thickness=2 at.Transparency=1 at.Parent=ar local W=Instance.new('UIGradient')W.Color=ColorSequence.new({
+ColorSequenceKeypoint.new(0,G.Accent),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(71,151,255)),ColorSequenceKeypoint.new(1,G.AccentLine)})W.Parent=at local X=
+Instance.new('ImageLabel')X.Size=UDim2.new(1,-18,1,-18)X.Position=UDim2.fromOffset(9,9)X.BackgroundTransparency=1 X.Image=e X.ImageTransparency=1 X.ScaleType=
+Enum.ScaleType.Fit X.Rotation=-12 X.ZIndex=5 X.Parent=ar I(X)local Y=Instance.new('TextLabel')Y.Size=UDim2.new(1,0,0,20)Y.Position=UDim2.fromOffset(0,205)Y.
+BackgroundTransparency=1 Y.Text='Z-RAGE  //  CLIENT INITIALIZATION'Y.Font=Enum.Font.BuilderSansBold Y.TextSize=12 Y.TextColor3=G.Accent Y.TextTransparency=1 Y.
+ZIndex=5 Y.Parent=ao local Z=Instance.new('TextLabel')Z.Size=UDim2.new(1,0,0,54)Z.Position=UDim2.fromOffset(0,225)Z.BackgroundTransparency=1 Z.Text='FORGE Z'Z.
+Font=Enum.Font.BuilderSansExtraBold Z.TextSize=42 Z.TextColor3=Color3.new(1,1,1)Z.TextTransparency=1 Z.ZIndex=5 Z.Parent=ao local _=Instance.new('UIGradient')_.
+Color=ColorSequence.new({ColorSequenceKeypoint.new(0,G.Accent),ColorSequenceKeypoint.new(0.52,Color3.fromRGB(105,190,255)),ColorSequenceKeypoint.new(1,G.
+AccentLine)})_.Offset=Vector2.new(-0.22,0)_.Parent=Z local au=Instance.new('TextLabel')au.Size=UDim2.new(1,0,0,22)au.Position=UDim2.fromOffset(0,284)au.
+BackgroundTransparency=1 au.Text='Loading local interface\u{2026}'au.Font=Enum.Font.BuilderSans au.TextSize=15 au.TextColor3=G.TextSecondary au.TextTransparency
+=1 au.ZIndex=5 au.Parent=ao local av=Instance.new('Frame')av.AnchorPoint=Vector2.new(0.5,0)av.Size=UDim2.fromOffset(300,4)av.Position=UDim2.new(0.5,0,0,322)av.
+BackgroundColor3=Color3.fromRGB(16,49,52)av.BackgroundTransparency=1 av.BorderSizePixel=0 av.ZIndex=5 av.Parent=ao local aw=Instance.new('UICorner')aw.
+CornerRadius=UDim.new(1,0)aw.Parent=av local ax=Instance.new('Frame')ax.Size=UDim2.fromScale(0,1)ax.BackgroundColor3=Color3.new(1,1,1)ax.BorderSizePixel=0 ax.
+ZIndex=6 ax.Parent=av local ay=Instance.new('UICorner')ay.CornerRadius=UDim.new(1,0)ay.Parent=ax local az=Instance.new('UIGradient')az.Color=ColorSequence.new(G
+.Accent,G.AccentLine)az.Parent=ax for aA=1,10 do local aB=Instance.new('Frame')local aC=math.rad(aA*36)aB.AnchorPoint=Vector2.new(0.5,0.5)aB.Size=UDim2.
+fromOffset(aA%3==0 and 4 or 3,aA%3==0 and 4 or 3)aB.Position=UDim2.new(0.5,math.cos(aC)*104,0,112+math.sin(aC)*104)aB.BackgroundColor3=aA%2==0 and G.AccentLine
+or G.Accent aB.BackgroundTransparency=1 aB.BorderSizePixel=0 aB.ZIndex=4 aB.Parent=ao local aD=Instance.new('UICorner')aD.CornerRadius=UDim.new(1,0)aD.Parent=aB
+C:Create(aB,TweenInfo.new(0.8+aA*0.05,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{BackgroundTransparency=0.32}):Play()end C:Create(am,TweenInfo.
+new(0.32),{BackgroundTransparency=0.12}):Play()C:Create(an,TweenInfo.new(2.4,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut),{Offset=Vector2.new(0.12,0)}):
+Play()C:Create(aq,TweenInfo.new(0.64,Enum.EasingStyle.Back,Enum.EasingDirection.Out),{Scale=1}):Play()C:Create(ar,TweenInfo.new(0.38),{BackgroundTransparency=
+0.07}):Play()C:Create(at,TweenInfo.new(0.38),{Transparency=0.1}):Play()C:Create(W,TweenInfo.new(2.5,Enum.EasingStyle.Linear),{Rotation=330}):Play()C:Create(X,
+TweenInfo.new(0.56,Enum.EasingStyle.Back,Enum.EasingDirection.Out),{ImageTransparency=0,Rotation=0}):Play()task.wait(0.2)C:Create(Y,TweenInfo.new(0.28),{
+TextTransparency=0}):Play()C:Create(Z,TweenInfo.new(0.38),{TextTransparency=0}):Play()C:Create(_,TweenInfo.new(1.8,Enum.EasingStyle.Sine,Enum.EasingDirection.
+InOut),{Offset=Vector2.new(0.22,0)}):Play()task.wait(0.16)C:Create(au,TweenInfo.new(0.28),{TextTransparency=0}):Play()C:Create(av,TweenInfo.new(0.24),{
+BackgroundTransparency=0.14}):Play()C:Create(ax,TweenInfo.new(0.68,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{Size=UDim2.fromScale(0.38,1)}):Play()task.
+wait(0.62)au.Text='Preparing secure key session\u{2026}'C:Create(ax,TweenInfo.new(0.62,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{Size=UDim2.fromScale(
+0.76,1)}):Play()task.wait(0.58)au.Text='Ready'au.TextColor3=G.AccentLine C:Create(ax,TweenInfo.new(0.46,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{Size=
+UDim2.fromScale(1,1)}):Play()task.wait(0.58)C:Create(aq,TweenInfo.new(0.38,Enum.EasingStyle.Quint,Enum.EasingDirection.In),{Scale=1.06}):Play()C:Create(X,
+TweenInfo.new(0.26),{ImageTransparency=1}):Play()C:Create(ar,TweenInfo.new(0.3),{BackgroundTransparency=1}):Play()C:Create(at,TweenInfo.new(0.26),{Transparency=
+1}):Play()C:Create(Y,TweenInfo.new(0.22),{TextTransparency=1}):Play()C:Create(Z,TweenInfo.new(0.24),{TextTransparency=1}):Play()C:Create(au,TweenInfo.new(0.2),{
+TextTransparency=1}):Play()C:Create(av,TweenInfo.new(0.2),{BackgroundTransparency=1}):Play()C:Create(am,TweenInfo.new(0.4),{BackgroundTransparency=1}):Play()C:
+Create(aj,TweenInfo.new(0.4),{Volume=0}):Play()task.wait(0.42)end)if not al then warn('Forge Z boot intro failed:',am)end ak()end)end local function ag(ah)local
+ai=false local aj local function ak()if ai then return end ai=true if aj then pcall(function()aj:Destroy()end)end if type(ah)=='function'then task.spawn(ah)end
+end task.spawn(function()local al,am=pcall(function()local al=x:FindFirstChild('ForgeZWelcomeIntro')if al then al:Destroy()end aj=Instance.new('ScreenGui')aj.
+Name='ForgeZWelcomeIntro'aj.IgnoreGuiInset=true aj.ResetOnSpawn=false aj.ZIndexBehavior=Enum.ZIndexBehavior.Sibling aj.DisplayOrder=2147483000 aj.Parent=x local
+am=Instance.new('Frame')am.Name='Backdrop'am.Size=UDim2.fromScale(1,1)am.BackgroundColor3=Color3.fromRGB(0,5,8)am.BackgroundTransparency=1 am.BorderSizePixel=0
+am.ZIndex=1 am.Parent=aj local an=Instance.new('UIGradient')an.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(0,7,10)),
+ColorSequenceKeypoint.new(0.52,Color3.fromRGB(2,20,24)),ColorSequenceKeypoint.new(1,Color3.fromRGB(4,10,24))})an.Rotation=125 an.Parent=am local ao=Instance.
+new('Frame')ao.Name='Glow'ao.AnchorPoint=Vector2.new(0.5,0.5)ao.Size=UDim2.new(0.76,26,0,266)ao.Position=UDim2.fromScale(0.5,0.5)ao.BackgroundColor3=G.Accent ao
+.BackgroundTransparency=1 ao.BorderSizePixel=0 ao.ZIndex=2 ao.Parent=am local ap=Instance.new('UISizeConstraint')ap.MinSize=Vector2.new(350,246)ap.MaxSize=
+Vector2.new(706,266)ap.Parent=ao local aq=Instance.new('UICorner')aq.CornerRadius=UDim.new(0,22)aq.Parent=ao local ar=Instance.new('Frame')ar.Name='WelcomeCard'
+ar.AnchorPoint=Vector2.new(0.5,0.5)ar.Size=UDim2.new(0.72,0,0,240)ar.Position=UDim2.fromScale(0.5,0.5)ar.BackgroundColor3=Color3.fromRGB(3,14,18)ar.
+BackgroundTransparency=1 ar.BorderSizePixel=0 ar.ClipsDescendants=true ar.ZIndex=3 ar.Parent=am local as=Instance.new('UISizeConstraint')as.MinSize=Vector2.new(
+330,220)as.MaxSize=Vector2.new(680,240)as.Parent=ar local at=Instance.new('UIScale')at.Scale=0.84 at.Parent=ar local au=Instance.new('UICorner')au.CornerRadius=
+UDim.new(0,18)au.Parent=ar local av=Instance.new('UIGradient')av.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(2,13,17)),
+ColorSequenceKeypoint.new(0.58,Color3.fromRGB(4,26,28)),ColorSequenceKeypoint.new(1,Color3.fromRGB(7,16,34))})av.Rotation=120 av.Offset=Vector2.new(-0.14,0)av.
+Parent=ar local aw=Instance.new('UIStroke')aw.Color=Color3.new(1,1,1)aw.Thickness=1.5 aw.Transparency=1 aw.Parent=ar local ax=Instance.new('UIGradient')ax.Color
+=ColorSequence.new({ColorSequenceKeypoint.new(0,G.Accent),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(72,151,255)),ColorSequenceKeypoint.new(1,G.AccentLine)})
+ax.Parent=aw local ay=Instance.new('Frame')ay.Name='Scan'ay.Size=UDim2.new(0,100,1.5,0)ay.Position=UDim2.new(-0.3,0,-0.25,0)ay.Rotation=13 ay.BackgroundColor3=
+Color3.new(1,1,1)ay.BackgroundTransparency=0.84 ay.BorderSizePixel=0 ay.ZIndex=4 ay.Parent=ar local az=Instance.new('UIGradient')az.Color=ColorSequence.new(G.
+Accent,G.AccentLine)az.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.5,0.12),NumberSequenceKeypoint.new(1,1)})az
+.Parent=ay local aA=Instance.new('Frame')aA.Name='Logo'aA.AnchorPoint=Vector2.new(0,0.5)aA.Size=UDim2.fromOffset(76,76)aA.Position=UDim2.new(0,30,0.5,-8)aA.
+BackgroundColor3=Color3.fromRGB(4,22,28)aA.BackgroundTransparency=1 aA.BorderSizePixel=0 aA.ZIndex=6 aA.Parent=ar local aB=Instance.new('UICorner')aB.
+CornerRadius=UDim.new(0,20)aB.Parent=aA local aC=Instance.new('UIStroke')aC.Color=G.Accent aC.Thickness=2 aC.Transparency=1 aC.Parent=aA local aD=Instance.new(
+'ImageLabel')aD.Name='ForgePublishedLogo'aD.Size=UDim2.new(1,-12,1,-12)aD.Position=UDim2.fromOffset(6,6)aD.BackgroundTransparency=1 aD.Image=e aD.
+ImageTransparency=1 aD.ScaleType=Enum.ScaleType.Fit aD.Rotation=-8 aD.ZIndex=8 aD.Parent=aA I(aD)local W=Instance.new('Frame')W.Name='Copy'W.Size=UDim2.new(1,-
+146,1,-48)W.Position=UDim2.fromOffset(126,24)W.BackgroundTransparency=1 W.ZIndex=6 W.Parent=ar local X=Instance.new('TextLabel')X.Size=UDim2.new(1,0,0,22)X.
+BackgroundTransparency=1 X.Text='ACCESS GRANTED  //  FORGE Z'X.Font=Enum.Font.BuilderSansBold X.TextSize=12 X.TextScaled=true X.TextColor3=G.Accent X.
+TextTransparency=1 X.TextXAlignment=Enum.TextXAlignment.Left X.ZIndex=7 X.Parent=W local Y=Instance.new('UITextSizeConstraint')Y.MinTextSize=9 Y.MaxTextSize=12
+Y.Parent=X local Z=ae(H.DisplayName or H.Name)local _=Instance.new('TextLabel')_.Size=UDim2.new(1,0,0,62)_.Position=UDim2.fromOffset(0,31)_.
+BackgroundTransparency=1 _.RichText=true _.Text='Welcome to <font color="#00FFBF"><b>ForgeZ</b></font>, <b>'..Z..'</b>'_.Font=Enum.Font.BuilderSans _.TextSize=
+30 _.TextScaled=true _.TextWrapped=true _.TextColor3=G.TextPrimary _.TextTransparency=1 _.TextXAlignment=Enum.TextXAlignment.Left _.TextYAlignment=Enum.
+TextYAlignment.Center _.ZIndex=7 _.Parent=W local aE=Instance.new('UITextSizeConstraint')aE.MinTextSize=19 aE.MaxTextSize=30 aE.Parent=_ local aF=Instance.new(
+'TextLabel')aF.Size=UDim2.new(1,0,0,42)aF.Position=UDim2.fromOffset(0,99)aF.BackgroundTransparency=1 aF.Text='We make your experience actually enjoyable.'aF.
+Font=Enum.Font.BuilderSans aF.TextSize=16 aF.TextScaled=true aF.TextWrapped=true aF.TextColor3=G.TextSecondary aF.TextTransparency=1 aF.TextXAlignment=Enum.
+TextXAlignment.Left aF.TextYAlignment=Enum.TextYAlignment.Top aF.ZIndex=7 aF.Parent=W local aG=Instance.new('UITextSizeConstraint')aG.MinTextSize=12 aG.
+MaxTextSize=16 aG.Parent=aF local aH=Instance.new('Frame')aH.Size=UDim2.new(1,0,0,3)aH.Position=UDim2.new(0,0,1,-15)aH.BackgroundColor3=Color3.fromRGB(23,59,61)
+aH.BackgroundTransparency=1 aH.BorderSizePixel=0 aH.ZIndex=7 aH.Parent=W local aI=Instance.new('UICorner')aI.CornerRadius=UDim.new(1,0)aI.Parent=aH local aJ=
+Instance.new('Frame')aJ.Size=UDim2.fromScale(0,1)aJ.BackgroundColor3=G.Accent aJ.BorderSizePixel=0 aJ.ZIndex=8 aJ.Parent=aH local aK=Instance.new('UICorner')aK.
+CornerRadius=UDim.new(1,0)aK.Parent=aJ local aL=Instance.new('UIGradient')aL.Color=ColorSequence.new(G.Accent,G.AccentLine)aL.Parent=aJ for aM=1,7 do local aN=
+Instance.new('Frame')aN.Size=UDim2.fromOffset(aM%3==0 and 4 or 3,aM%3==0 and 4 or 3)aN.Position=UDim2.new(0.08+aM*0.12,0,aM%2==0 and 0.16 or 0.82,0)aN.
+BackgroundColor3=aM%2==0 and G.AccentLine or G.Accent aN.BackgroundTransparency=1 aN.BorderSizePixel=0 aN.ZIndex=5 aN.Parent=ar local aO=Instance.new('UICorner'
+)aO.CornerRadius=UDim.new(1,0)aO.Parent=aN C:Create(aN,TweenInfo.new(0.7+aM*0.07,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{
+BackgroundTransparency=0.42}):Play()end C:Create(am,TweenInfo.new(0.32),{BackgroundTransparency=0.22}):Play()C:Create(ao,TweenInfo.new(0.45),{
+BackgroundTransparency=0.9}):Play()C:Create(ar,TweenInfo.new(0.32),{BackgroundTransparency=0.04}):Play()C:Create(at,TweenInfo.new(0.62,Enum.EasingStyle.Back,
+Enum.EasingDirection.Out),{Scale=1}):Play()C:Create(aw,TweenInfo.new(0.4),{Transparency=0.14}):Play()C:Create(av,TweenInfo.new(2.5,Enum.EasingStyle.Sine,Enum.
+EasingDirection.InOut),{Offset=Vector2.new(0.12,0)}):Play()C:Create(ax,TweenInfo.new(2.7,Enum.EasingStyle.Linear),{Rotation=300}):Play()C:Create(ay,TweenInfo.
+new(1.25,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{Position=UDim2.new(1.12,0,-0.25,0)}):Play()task.wait(0.18)C:Create(aA,TweenInfo.new(0.28),{
+BackgroundTransparency=0.08}):Play()C:Create(aC,TweenInfo.new(0.28),{Transparency=0.12}):Play()C:Create(aD,TweenInfo.new(0.3),{ImageTransparency=0,Rotation=0}):
+Play()C:Create(X,TweenInfo.new(0.3),{TextTransparency=0}):Play()task.wait(0.16)C:Create(_,TweenInfo.new(0.4,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{
+TextTransparency=0}):Play()task.wait(0.18)C:Create(aF,TweenInfo.new(0.38),{TextTransparency=0}):Play()C:Create(aH,TweenInfo.new(0.25),{BackgroundTransparency=
+0.15}):Play()C:Create(aJ,TweenInfo.new(2.05,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{Size=UDim2.fromScale(1,1)}):Play()task.wait(2.15)C:Create(at,
+TweenInfo.new(0.38,Enum.EasingStyle.Quint,Enum.EasingDirection.In),{Scale=1.055}):Play()C:Create(ar,TweenInfo.new(0.38),{BackgroundTransparency=1}):Play()C:
+Create(aw,TweenInfo.new(0.3),{Transparency=1}):Play()C:Create(ao,TweenInfo.new(0.34),{BackgroundTransparency=1}):Play()C:Create(aA,TweenInfo.new(0.28),{
+BackgroundTransparency=1}):Play()C:Create(aC,TweenInfo.new(0.28),{Transparency=1}):Play()C:Create(aD,TweenInfo.new(0.25),{ImageTransparency=1}):Play()C:Create(X
+,TweenInfo.new(0.22),{TextTransparency=1}):Play()C:Create(_,TweenInfo.new(0.25),{TextTransparency=1}):Play()C:Create(aF,TweenInfo.new(0.22),{TextTransparency=1}
+):Play()C:Create(aH,TweenInfo.new(0.2),{BackgroundTransparency=1}):Play()C:Create(am,TweenInfo.new(0.42),{BackgroundTransparency=1}):Play()task.wait(0.44)end)if
+not al then warn('Forge Z welcome intro failed:',am)end ak()end)end local function ah()local ai task.spawn(function()local aj,ak=pcall(function()local aj=x:
+FindFirstChild('ForgeZGoodbyeOutro')if aj then aj:Destroy()end ai=Instance.new('ScreenGui')ai.Name='ForgeZGoodbyeOutro'ai.IgnoreGuiInset=true ai.ResetOnSpawn=
+false ai.ZIndexBehavior=Enum.ZIndexBehavior.Sibling ai.DisplayOrder=2147483000 ai.Parent=x local ak=Instance.new('Frame')ak.Size=UDim2.fromScale(1,1)ak.
+BackgroundColor3=Color3.fromRGB(0,5,8)ak.BackgroundTransparency=1 ak.BorderSizePixel=0 ak.ZIndex=1 ak.Parent=ai local al=Instance.new('UIGradient')al.Color=
+ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(1,6,9)),ColorSequenceKeypoint.new(0.5,Color3.fromRGB(3,22,24)),ColorSequenceKeypoint.new(1,Color3.
+fromRGB(5,10,25))})al.Rotation=120 al.Parent=ak local am=Instance.new('Frame')am.AnchorPoint=Vector2.new(0.5,0.5)am.Size=UDim2.fromOffset(460,320)am.Position=
+UDim2.fromScale(0.5,0.5)am.BackgroundTransparency=1 am.ZIndex=3 am.Parent=ak local an=Instance.new('UIScale')an.Scale=0.76 an.Parent=am local ao=Instance.new(
+'Frame')ao.AnchorPoint=Vector2.new(0.5,0.5)ao.Size=UDim2.fromOffset(154,154)ao.Position=UDim2.new(0.5,0,0,102)ao.BackgroundColor3=Color3.fromRGB(3,18,23)ao.
+BackgroundTransparency=1 ao.BorderSizePixel=0 ao.ZIndex=4 ao.Parent=am local ap=Instance.new('UICorner')ap.CornerRadius=UDim.new(1,0)ap.Parent=ao local aq=
+Instance.new('UIStroke')aq.Color=Color3.new(1,1,1)aq.Thickness=2 aq.Transparency=1 aq.Parent=ao local ar=Instance.new('UIGradient')ar.Color=ColorSequence.new({
+ColorSequenceKeypoint.new(0,G.Accent),ColorSequenceKeypoint.new(0.52,Color3.fromRGB(72,151,255)),ColorSequenceKeypoint.new(1,G.AccentLine)})ar.Parent=aq local
+as=Instance.new('ImageLabel')as.Size=UDim2.new(1,-16,1,-16)as.Position=UDim2.fromOffset(8,8)as.BackgroundTransparency=1 as.Image=e as.ImageTransparency=1 as.
+ScaleType=Enum.ScaleType.Fit as.Rotation=-9 as.ZIndex=5 as.Parent=ao I(as)local at=Instance.new('TextLabel')at.Size=UDim2.new(1,0,0,20)at.Position=UDim2.
+fromOffset(0,190)at.BackgroundTransparency=1 at.Text='FORGE Z  //  SESSION CLOSED'at.Font=Enum.Font.BuilderSansBold at.TextSize=12 at.TextColor3=G.Accent at.
+TextTransparency=1 at.ZIndex=5 at.Parent=am local au=Instance.new('TextLabel')au.Size=UDim2.new(1,0,0,48)au.Position=UDim2.fromOffset(0,211)au.
+BackgroundTransparency=1 au.Text='Until next time.'au.Font=Enum.Font.BuilderSansExtraBold au.TextSize=34 au.TextColor3=G.TextPrimary au.TextTransparency=1 au.
+ZIndex=5 au.Parent=am local av=Instance.new('TextLabel')av.Size=UDim2.new(1,0,0,24)av.Position=UDim2.fromOffset(0,258)av.BackgroundTransparency=1 av.Text=
+'Thanks for using Forge Z.'av.Font=Enum.Font.BuilderSans av.TextSize=15 av.TextColor3=G.TextSecondary av.TextTransparency=1 av.ZIndex=5 av.Parent=am local aw=
+Instance.new('Frame')aw.AnchorPoint=Vector2.new(0.5,0)aw.Size=UDim2.fromOffset(0,2)aw.Position=UDim2.new(0.5,0,0,294)aw.BackgroundColor3=Color3.new(1,1,1)aw.
+BorderSizePixel=0 aw.ZIndex=5 aw.Parent=am local ax=Instance.new('UICorner')ax.CornerRadius=UDim.new(1,0)ax.Parent=aw local ay=Instance.new('UIGradient')ay.
+Color=ColorSequence.new(G.Accent,G.AccentLine)ay.Transparency=NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.5,0),
+NumberSequenceKeypoint.new(1,1)})ay.Parent=aw for az=1,8 do local aA=Instance.new('Frame')local aB=math.rad(az*45)aA.AnchorPoint=Vector2.new(0.5,0.5)aA.Size=
+UDim2.fromOffset(az%2==0 and 4 or 3,az%2==0 and 4 or 3)aA.Position=UDim2.new(0.5,math.cos(aB)*94,0,102+math.sin(aB)*94)aA.BackgroundColor3=az%2==0 and G.
+AccentLine or G.Accent aA.BackgroundTransparency=1 aA.BorderSizePixel=0 aA.ZIndex=4 aA.Parent=am local aC=Instance.new('UICorner')aC.CornerRadius=UDim.new(1,0)
+aC.Parent=aA C:Create(aA,TweenInfo.new(0.75+az*0.06,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut,-1,true),{BackgroundTransparency=0.34}):Play()end C:Create(
+ak,TweenInfo.new(0.32),{BackgroundTransparency=0.18}):Play()C:Create(an,TweenInfo.new(0.62,Enum.EasingStyle.Back,Enum.EasingDirection.Out),{Scale=1}):Play()C:
+Create(ao,TweenInfo.new(0.38),{BackgroundTransparency=0.08}):Play()C:Create(aq,TweenInfo.new(0.38),{Transparency=0.12}):Play()C:Create(ar,TweenInfo.new(2.4,Enum
+.EasingStyle.Linear),{Rotation=320}):Play()C:Create(as,TweenInfo.new(0.52,Enum.EasingStyle.Back,Enum.EasingDirection.Out),{ImageTransparency=0,Rotation=0}):
+Play()task.wait(0.2)C:Create(at,TweenInfo.new(0.28),{TextTransparency=0}):Play()task.wait(0.14)C:Create(au,TweenInfo.new(0.38),{TextTransparency=0}):Play()task.
+wait(0.12)C:Create(av,TweenInfo.new(0.34),{TextTransparency=0}):Play()C:Create(aw,TweenInfo.new(0.75,Enum.EasingStyle.Quint,Enum.EasingDirection.Out),{Size=
+UDim2.fromOffset(250,2)}):Play()task.wait(1.8)C:Create(an,TweenInfo.new(0.4,Enum.EasingStyle.Quint,Enum.EasingDirection.In),{Scale=1.06}):Play()C:Create(as,
+TweenInfo.new(0.28),{ImageTransparency=1}):Play()C:Create(ao,TweenInfo.new(0.32),{BackgroundTransparency=1}):Play()C:Create(aq,TweenInfo.new(0.28),{Transparency
+=1}):Play()C:Create(at,TweenInfo.new(0.24),{TextTransparency=1}):Play()C:Create(au,TweenInfo.new(0.25),{TextTransparency=1}):Play()C:Create(av,TweenInfo.new(
+0.22),{TextTransparency=1}):Play()C:Create(aw,TweenInfo.new(0.22),{BackgroundTransparency=1}):Play()C:Create(ak,TweenInfo.new(0.42),{BackgroundTransparency=1}):
+Play()task.wait(0.44)end)if not aj then warn('Forge Z goodbye outro failed:',ak)end if ai then pcall(function()ai:Destroy()end)end end)end local function ai()
+local aj=U.Menu({Title=b,Theme=G,Size=UDim2.fromOffset(790,540),MinSize=Vector2.new(570,400),MaxSize=Vector2.new(1100,760),Resizable=true,Responsive=true,Shadow
+=true,HasOutline=true,Stats={Enabled=true,TabName='Dashboard',TabIcon='layout-dashboard',ShowProfile=true,ShowGame=true,ShowServer=true,ShowSupport=true},
+Support={Title='Z-RAGE Community',Description='Updates, support and new Forge releases.',ButtonText='Join Z-RAGE',ButtonIcon='message-circle',Discord=
+'https://discord.gg/z-rage',Callback=N}})V(aj,'Forge Z')ac(aj)ad(aj)local ak=aa(aj)local al={Menu=aj,Destroyed=false,Connections={},OutputLines={},CurrentThread
+=nil,ExecutionCount=0,NoclipEnabled=false,InfiniteJumpEnabled=false,FlyEnabled=false,MovementLockEnabled=false,AntiAfkEnabled=false,TargetFollowEnabled=false,
+TargetOrbitEnabled=false,TargetFollowDistance=5,TargetOrbitRadius=10,TargetOrbitSpeed=1,TargetOrbitAngle=0,FlingToken=nil,AvatarDescription=nil,
+AvatarOriginalDescription=nil,AvatarHeadlessOverride=false,AvatarApplying=false,AvatarApplyQueued=false,AvatarApplyReason=nil,AvatarHasEdits=false,
+AvatarEffectAssetId=nil,AvatarInspectBridge=nil,ChatIdentityBridge=nil,AvatarRigType=nil,LocalUsername=H.Name,LocalDisplayName=H.DisplayName,LocalVerified=false
+,WalkSpeed=16,JumpPower=50,FlySpeed=70}K.__ForgeUniversalDeveloperHub=al local am=aj:Tab({Text='Executor',Icon='square-terminal'})local an=aj:Tab({Text=
+'Scripts',Icon='library'})local ao=aj:Tab({Text='Player',Icon='user-round-cog'})local ap=aj:Tab({Text='Avatar Editor',Icon='shirt'})local aq=aj:Tab({Text=
+'World',Icon='earth'})local ar=aj:Tab({Text='Utilities',Icon='wrench'})local as=aj:Tab({Text='Console',Icon='logs'})local at=aj:Tab({Text='Settings',Icon=
+'settings'})local function au(av)table.insert(al.Connections,av)return av end local function av()return H.Character end local function aw()local ax=av()return
+ax and ax:FindFirstChildOfClass('Humanoid')or nil end local function ax()local ay=av()return ay and ay:FindFirstChild('HumanoidRootPart')or nil end local ay=am:
+Label({Text='<b>Status:</b> Ready',Description=[[Every feature and executed script runs locally through the executor.]]})local function az(aA,aB)local aC={
+Connections={}}local aD=aj.Theme local aE=Instance.new('Frame')aE.Name=aB.Name or'MultilinePanel'aE.Size=UDim2.new(1,-12,0,aB.Height or 255)aE.Position=UDim2.
+fromOffset(6,0)aE.BackgroundColor3=aD.Element aE.BorderSizePixel=0 aE.ClipsDescendants=true aE.AutomaticSize=Enum.AutomaticSize.None aE.Parent=aA.Container aC.
+Container=aE local aF=Instance.new('UICorner')aF.CornerRadius=UDim.new(0,8)aF.Parent=aE local aG=Instance.new('UIStroke')aG.Color=aD.ElementBorder aG.
+Transparency=0.6 aG.Thickness=1 aG.Parent=aE aC.Stroke=aG local aH=Instance.new('TextLabel')aH.Name='Title'aH.Size=UDim2.new(1,-20,0,20)aH.Position=UDim2.
+fromOffset(10,7)aH.BackgroundTransparency=1 aH.Text=aB.Text or'Editor'aH.Font=aD.Font aH.TextSize=aD.FontSize aH.TextColor3=aD.TextPrimary aH.TextXAlignment=
+Enum.TextXAlignment.Left aH.Parent=aE aC.Label=aH local aI=Instance.new('TextLabel')aI.Name='Description'aI.Size=UDim2.new(1,-20,0,16)aI.Position=UDim2.
+fromOffset(10,28)aI.BackgroundTransparency=1 aI.Text=aB.Description or''aI.Font=aD.Font aI.TextSize=aD.FontSizeSmall aI.TextColor3=aD.TextMuted aI.
+TextXAlignment=Enum.TextXAlignment.Left aI.Parent=aE aC.Description=aI local aJ=Instance.new('TextBox')aJ.Name='TextBox'aJ.Size=UDim2.new(1,-20,1,-58)aJ.
+Position=UDim2.fromOffset(10,48)aJ.BackgroundColor3=aD.ElementHover aJ.BorderSizePixel=0 aJ.Text=tostring(aB.Default or'')aJ.PlaceholderText=aB.Placeholder or''
+aJ.ClearTextOnFocus=false aJ.MultiLine=true aJ.TextWrapped=false aJ.TextEditable=aB.Editable~=false aJ.Font=Enum.Font.Code aJ.TextSize=aB.TextSize or 14 aJ.
+TextColor3=aD.TextPrimary aJ.PlaceholderColor3=aD.TextMuted aJ.TextXAlignment=Enum.TextXAlignment.Left aJ.TextYAlignment=Enum.TextYAlignment.Top aJ.Parent=aE aC
+.TextBox=aJ local aK=Instance.new('UICorner')aK.CornerRadius=UDim.new(0,6)aK.Parent=aJ local aL=Instance.new('UIPadding')aL.PaddingTop=UDim.new(0,7)aL.
+PaddingBottom=UDim.new(0,7)aL.PaddingLeft=UDim.new(0,8)aL.PaddingRight=UDim.new(0,8)aL.Parent=aJ function aC:SetValue(aM)if self.TextBox then self.TextBox.Text=
+tostring(aM or'')end return true end function aC:GetValue()return self.TextBox and self.TextBox.Text or''end function aC:ApplyTheme(aM)if not self.Container
+then return end self.Container.BackgroundColor3=aM.Element self.Stroke.Color=aM.ElementBorder self.Label.Font=aM.Font self.Label.TextSize=aM.FontSize self.Label
+.TextColor3=aM.TextPrimary self.Description.Font=aM.Font self.Description.TextSize=aM.FontSizeSmall self.Description.TextColor3=aM.TextMuted self.TextBox.
+BackgroundColor3=aM.ElementHover self.TextBox.Font=Enum.Font.Code self.TextBox.TextColor3=aM.TextPrimary self.TextBox.PlaceholderColor3=aM.TextMuted end
+function aC:Destroy()for aM,aN in ipairs(self.Connections)do aN:Disconnect()end if self.Container then self.Container:Destroy()end end table.insert(aC.
+Connections,aJ.Focused:Connect(function()aJ.BackgroundColor3=aj.Theme.Element end))table.insert(aC.Connections,aJ.FocusLost:Connect(function()aJ.
+BackgroundColor3=aj.Theme.ElementHover end))table.insert(aA.Components,aC)if aj._makeSelectable then aj:_makeSelectable(aJ)end return aC end local aA=az(am,{
+Name='ClientScriptEditor',Text='Client script editor',Description=[[Write Luau below. The injected hub table contains local helpers.]],Default=
+[[print("Hello from Forge Z v1")
+print("Player:", hub.Player.Name, hub.Player.UserId)
+print("Place:", game.PlaceId)]],Height=255})local aB=az(as,{Name=
+'ClientOutput',Text='Client output',Description=[[Prints, warnings, return values and hub activity from this session.]],Default='Forge Z v1 ready.',Height=350,
+TextSize=13,Editable=false})local function aC(...)local aD=table.create(select('#',...))for aE=1,select('#',...)do aD[aE]=tostring(select(aE,...))end return
+table.concat(aD,'\t')end local function aD()while#al.OutputLines>250 do table.remove(al.OutputLines,1)end aB:SetValue(table.concat(al.OutputLines,'\n'),true)end
+local function aE(aF,...)local aG=aC(...):gsub('[\r\n]+',' ')if#aG>4000 then aG=string.sub(aG,1,4000)..'\u{2026}'end table.insert(al.OutputLines,string.format(
+'[%s] [%s] %s',os.date('!%H:%M:%S'),aF,aG))aD()end local function aF(aG,aH)ay.SetText('<b>Status:</b> '..aG)if aH then aj:Notify({Title='Developer Hub',Content=
+aG,Type=aH,Duration=3})end end local function aG()return aA.TextBox.Text end local function aH(aI,aJ)aA:SetValue(aI,true)aF('Loaded '..(aJ or'script')..
+' into the editor','Info')end local function aI(aJ,aK)local aL='return function(print, warn, hub)\n'..aJ..'\nend'local aM,aN=O(aL,'='..aK)if not aM then return
+false,'Compile error: '..tostring(aN)end local aO,W=pcall(aM)if not aO or type(W)~='function'then return false,'Could not create script function: '..tostring(W)
+end local X={Player=H,Menu=aj,GetCharacter=av,GetHumanoid=aw,GetRoot=ax,Log=function(...)aE('INFO',...)end,Warn=function(...)aE('WARN',...)end,Notify=function(X
+,Y,Z)aj:Notify({Title=tostring(X or'Client Script'),Content=tostring(Y or''),Type=Z or'Info'})end,HttpGet=function(X)return game:HttpGet(X)end}local Y=table.
+pack(xpcall(function()return W(function(...)aE('PRINT',...)end,function(...)aE('WARN',...)end,X)end,debug.traceback))if not Y[1]then return false,Y[2]end if Y.n
+>1 then local Z={}for _=2,Y.n do table.insert(Z,tostring(Y[_]))end aE('RETURN',table.concat(Z,', '))end return true end local function aJ(aK,aL)if al.Destroyed
+then return end if type(aK)~='string'or aK:match('^%s*$')then aF('The editor is empty','Warning')return end if al.CurrentThread then aF(
+'Stop the current script before starting another','Warning')return end al.ExecutionCount+=1 aE('HUB','Executing',aL)aF('Executing '..aL..'\u{2026}')al.
+CurrentThread=task.defer(function()local aM,aN=aI(aK,aL)al.CurrentThread=nil if aM then aE('HUB','Execution completed')aF('Execution completed','Success')else
+aE('ERROR',aN)aF('Execution failed; see Console','Error')end end)end local aK=am:Columns({Ratio={1,1,1},Gap=8,StackOnCompact=true})aK:Column(1):Button({Text=
+'Execute',Description='Run the editor through the kernel executor.',Icon='play',Callback=function()aJ(aG(),'ForgeEditor')end})aK:Column(2):Button({Text='Stop',
+Description='Cancel the current hub-managed client thread.',Icon='square-stop',Callback=function()if not al.CurrentThread then aF(
+'No hub-managed script is running','Info')return end local aL,aM=pcall(task.cancel,al.CurrentThread)al.CurrentThread=nil if aL then aE('HUB',
+'Current script cancelled')aF('Current script cancelled','Warning')else aE('ERROR',aM)end end})aK:Column(3):Button({Text='Clear',Description=
+'Clear the script editor.',Icon='eraser',Callback=function()aA:SetValue('',true)aF('Editor cleared')end})local aL=am:Input({Text='Remote script URL',Description
+='Load plain-text Lua/Luau over HTTPS into the editor.',Placeholder='https://raw.githubusercontent.com/...',ClearTextOnFocus=false,Flag='RemoteScriptUrl'})aL.
+TextBox.Size=UDim2.fromOffset(320,26)aL.TextBox.Position=UDim2.new(1,-332,0.5,-13)aL.Label.Size=UDim2.new(1,-350,0,20)local aM=aL.Container:FindFirstChild(
+'Description')if aM and aM:IsA('TextLabel')then aM.Size=UDim2.new(1,-350,0,16)end ab(aL,nil,8)local function aN(aO)if type(aO)~='string'or not aO:match(
+'^https://')then return false,'Only HTTPS URLs are accepted'end local W,X=pcall(game.HttpGet,game,aO)if not W then return false,tostring(X)end if type(X)~=
+'string'then return false,'URL did not return source text'end if#X>i then return false,string.format('Remote source exceeds %d bytes',i)end return true,X end
+local aO=am:Columns({Ratio={1,1},Gap=8,StackOnCompact=true})aO:Column(1):Button({Text='Load URL',Description='Download into the editor for review.',Icon=
+'download',Callback=function()local W,X=aN(aL:GetValue())if not W then aE('ERROR',X)aF('URL load failed','Error')return end aH(X,'remote source')aE('HUB',
+'Loaded',#X,'bytes from URL')end})aO:Column(2):Button({Text='Execute URL',Description='Download and immediately run the URL.',Icon='cloud-lightning',Callback=
+function()local W,X=aN(aL:GetValue())if not W then aE('ERROR',X)aF('URL execution failed','Error')return end aJ(X,'RemoteScript')end})am:Label({Text=
+'<b>Hotkeys:</b> Ctrl+Enter executes \u{b7} Right Control toggles the UI',Description=
+[[Stop only cancels the main managed thread; child tasks created by a script may continue.]]})local W={{Name='Session snapshot',Description=
+'Print client, place, server and executor details.',Source=
+[[local identify = identifyexecutor or getexecutorname
+print("Player", hub.Player.Name, hub.Player.UserId)
+print("PlaceId", game.PlaceId, "GameId", game.GameId)
+print("JobId", game.JobId ~= "" and game.JobId or "Studio")
+print("Executor", identify and identify() or "Unknown")
+print("Client loaded", game:IsLoaded())]]
+},{Name='Character diagnostics',Description='Inspect the local character, humanoid and root part.',Source=
+[[local character = hub.GetCharacter()
+assert(character, "Character is not spawned")
+local humanoid = hub.GetHumanoid()
+local root = hub.GetRoot()
+print("Character", character:GetFullName())
+print("Root position", root and root.Position or "missing")
+print("Humanoid state", humanoid and humanoid:GetState() or "missing")
+print("Health", humanoid and humanoid.Health or "n/a")]]
+},{Name='ReplicatedStorage inventory',Description='List top-level replicated objects without firing anything.',Source=
+'local storage = game:GetService("ReplicatedStorage")\nlocal children = storage:GetChildren()\ntable.sort(children, function(a, b) return a.Name < b.Name end)\nprint("ReplicatedStorage children", #children)\nfor _, child in ipairs(children) do\n\tprint(child.Name, "[" .. child.ClassName .. "]")\nend'
+},{Name='Workspace class counts',Description='Show the 25 most common instance classes in Workspace.',Source=
+'local counts = {}\nfor _, instance in ipairs(workspace:GetDescendants()) do\n\tcounts[instance.ClassName] = (counts[instance.ClassName] or 0) + 1\nend\nlocal rows = {}\nfor className, count in pairs(counts) do\n\ttable.insert(rows, { Name = className, Count = count })\nend\ntable.sort(rows, function(a, b) return a.Count > b.Count end)\nfor index = 1, math.min(25, #rows) do\n\tprint(rows[index].Name, rows[index].Count)\nend'
+},{Name='PlayerGui inventory',Description='List local UI roots and their enabled state.',Source=
+'local playerGui = hub.Player:WaitForChild("PlayerGui")\nfor _, item in ipairs(playerGui:GetChildren()) do\n\tlocal enabled = item:IsA("LayerCollector") and item.Enabled or "n/a"\n\tprint(item.Name, item.ClassName, "Enabled=" .. tostring(enabled))\nend'
+}}an:BoldLabel({Text='Client diagnostic scripts',Description=[[Load a preset into the editor so it can be reviewed or changed first.]]})for X,Y in ipairs(W)do
+an:Button({Text=Y.Name,Description=Y.Description,Icon='square-terminal',Callback=function()aH(Y.Source,Y.Name)end})end local X=setmetatable({},{__mode='k'})
+local Y=setmetatable({},{__mode='k'})local function Z(_)if not X[_]then X[_]={WalkSpeed=_.WalkSpeed,JumpPower=_.JumpPower,UseJumpPower=_.UseJumpPower}end end
+local function _()local aP=aw()if aP then Z(aP)aP.WalkSpeed=al.WalkSpeed aP.UseJumpPower=true aP.JumpPower=al.JumpPower end end ao:BoldLabel({Text='Movement',
+Description='Local character controls.'})local aP=ao:Slider({Text='Walk speed',Min=0,Max=300,Step=1,Default=al.WalkSpeed,Suffix=' studs/s',Flag='WalkSpeed',
+Callback=function(aP)al.WalkSpeed=aP _()end})local aQ=ao:Slider({Text='Jump power',Min=0,Max=300,Step=1,Default=al.JumpPower,Suffix='',Flag='JumpPower',Callback
+=function(aQ)al.JumpPower=aQ _()end})ao:Toggle({Text='Lock movement values',Description='Continuously reapply speed and jump power locally.',Default=false,Flag=
+'MovementLock',Callback=function(aR)al.MovementLockEnabled=aR if aR then _()end end})ao:Toggle({Text='Infinite jump',Description='Allow jumping while airborne.'
+,Default=false,Flag='InfiniteJump',Callback=function(aR)al.InfiniteJumpEnabled=aR end})ao:Toggle({Text='Noclip',Description=
+'Disable local character collisions while enabled.',Default=false,Flag='Noclip',Callback=function(aR)al.NoclipEnabled=aR if not aR then for aS,aT in pairs(Y)do
+if aS.Parent then aS.CanCollide=aT end Y[aS]=nil end end end})local aR local aS local aT local aU local function aV()al.FlyEnabled=false if aR then aR:Destroy()
+aR=nil end if aS then aS:Destroy()aS=nil end if aT and aT.Parent then if aU~=nil then aT.AutoRotate=aU end end aT=nil aU=nil end local function aW()aV()local aX
+=ax()local aY=aw()if not aX or not aY then aF('Character is not ready for flight','Warning')return false end al.FlyEnabled=true aT=aY aU=aY.AutoRotate aY.
+AutoRotate=false aR=Instance.new('BodyVelocity')aR.Name='ForgeFlyVelocity'aR.MaxForce=Vector3.new(1e9,1e9,1e9)aR.P=12500 aR.Velocity=Vector3.zero aR.Parent=aX
+aS=Instance.new('BodyGyro')aS.Name='ForgeFlyGyro'aS.MaxTorque=Vector3.new(1e9,1e9,1e9)aS.P=12500 aS.CFrame=aX.CFrame aS.Parent=aX return true end ao:Toggle({
+Text='Fly',Description='WASD to move, Space/Left Control for vertical movement.',Default=false,Flag='Fly',Callback=function(aX)if aX then aW()else aV()end end})
+ao:Slider({Text='Fly speed',Min=10,Max=300,Step=5,Default=al.FlySpeed,Suffix=' studs/s',Flag='FlySpeed',Callback=function(aX)al.FlySpeed=aX end})ao:Divider()ao:
+BoldLabel({Text='Position'})local aX=ao:Input({Text='Teleport coordinates',Description='Comma-separated X, Y, Z coordinates.',Placeholder='0, 10, 0',
+ClearTextOnFocus=false})ab(aX,220,9)ao:Button({Text='Teleport to coordinates',Description='Move the local character root to the entered position.',Icon=
+'map-pin',Callback=function()local aY={}local aZ=false for a_ in string.gmatch(aX:GetValue(),'[^,%s]+')do local a0=tonumber(a_)if a0==nil then aZ=true break end
+table.insert(aY,a0)end local a_=ax()if aZ or#aY~=3 then aF('Enter valid X, Y, Z coordinates','Warning')return end if not a_ then aF(
+'Character root is unavailable','Warning')return end a_.CFrame=CFrame.new(aY[1],aY[2],aY[3])aF('Teleported locally','Success')end})ao:Button({Text=
+'Reset movement',Description='Restore standard speed and jump values.',Icon='rotate-ccw',Callback=function()al.WalkSpeed=16 al.JumpPower=50 aP:SetValue(16)aQ:
+SetValue(50)_()end})local aY={'Auto detect','Hat','Hair','Face accessory','Neck','Shoulder','Front','Back','Waist','Layered T-Shirt','Layered Shirt',
+'Layered Pants','Jacket','Sweater','Shorts','Left shoe','Right shoe','Dress/Skirt','Eyebrows','Eyelashes','Classic T-Shirt','Classic shirt','Classic pants',
+'Head','Face','Torso','Left arm','Right arm','Left leg','Right leg'}local aZ={['Hat']={Kind='Csv',Property='HatAccessory'},['Hair']={Kind='Csv',Property=
+'HairAccessory'},['Face accessory']={Kind='Csv',Property='FaceAccessory'},['Neck']={Kind='Csv',Property='NeckAccessory'},['Shoulder']={Kind='Csv',Property=
+'ShouldersAccessory'},['Front']={Kind='Csv',Property='FrontAccessory'},['Back']={Kind='Csv',Property='BackAccessory'},['Waist']={Kind='Csv',Property=
+'WaistAccessory'},['Layered T-Shirt']={Kind='Layered',AccessoryType='TShirt'},['Layered Shirt']={Kind='Layered',AccessoryType='Shirt'},['Layered Pants']={Kind=
+'Layered',AccessoryType='Pants'},['Jacket']={Kind='Layered',AccessoryType='Jacket'},['Sweater']={Kind='Layered',AccessoryType='Sweater'},['Shorts']={Kind=
+'Layered',AccessoryType='Shorts'},['Left shoe']={Kind='Layered',AccessoryType='LeftShoe'},['Right shoe']={Kind='Layered',AccessoryType='RightShoe'},[
+'Dress/Skirt']={Kind='Layered',AccessoryType='DressSkirt'},['Eyebrows']={Kind='Layered',AccessoryType='Eyebrow'},['Eyelashes']={Kind='Layered',AccessoryType=
+'Eyelash'},['Classic T-Shirt']={Kind='Property',Property='GraphicTShirt'},['Classic shirt']={Kind='Property',Property='Shirt'},['Classic pants']={Kind=
+'Property',Property='Pants'},['Head']={Kind='Property',Property='Head'},['Face']={Kind='Property',Property='Face'},['Torso']={Kind='Property',Property='Torso'},
+['Left arm']={Kind='Property',Property='LeftArm'},['Right arm']={Kind='Property',Property='RightArm'},['Left leg']={Kind='Property',Property='LeftLeg'},[
+'Right leg']={Kind='Property',Property='RightLeg'}}local a_={Hat='Hat',HairAccessory='Hair',FaceAccessory='Face accessory',NeckAccessory='Neck',
+ShoulderAccessory='Shoulder',FrontAccessory='Front',BackAccessory='Back',WaistAccessory='Waist',TShirtAccessory='Layered T-Shirt',ShirtAccessory='Layered Shirt'
+,PantsAccessory='Layered Pants',JacketAccessory='Jacket',SweaterAccessory='Sweater',ShortsAccessory='Shorts',LeftShoeAccessory='Left shoe',RightShoeAccessory=
+'Right shoe',DressSkirtAccessory='Dress/Skirt',EyebrowAccessory='Eyebrows',EyelashAccessory='Eyelashes',TShirt='Classic T-Shirt',Shirt='Classic shirt',Pants=
+'Classic pants',Head='Head',DynamicHead='Head',Face='Face',Torso='Torso',LeftArm='Left arm',RightArm='Right arm',LeftLeg='Left leg',RightLeg='Right leg'}local
+a0={'HatAccessory','HairAccessory','FaceAccessory','NeckAccessory','ShouldersAccessory','FrontAccessory','BackAccessory','WaistAccessory'}local a1={
+'GraphicTShirt','Shirt','Pants','Head','Face','Torso','LeftArm','RightArm','LeftLeg','RightLeg'}local a2={'Headless Head',
+'Korblox Deathspeaker \u{2014} Right Leg'}local a3={'Fiery Horns of the Netherworld','Frozen Horns of the Frigid Planes','Poisoned Horns of the Toxic Wasteland'
+}local a4={['Fiery Horns of the Netherworld']=215718515,['Frozen Horns of the Frigid Planes']=74891470,['Poisoned Horns of the Toxic Wasteland']=1744060292}
+local a5={'Dominus Empyreus','Dominus Infernus','Dominus Frigidus','Dominus Messor','Dominus Vespertilio','Dominus Aureus','Dominus Astra','Dominus Rex',
+'Dominus Pittacium','Dominus Praefectus','Dominus Venari','Dominus Formidulosus'}local a6={['Dominus Empyreus']=21070012,['Dominus Infernus']=31101391,[
+'Dominus Frigidus']=48545806,['Dominus Messor']=64444871,['Dominus Vespertilio']=96103379,['Dominus Aureus']=138932314,['Dominus Astra']=162067148,[
+'Dominus Rex']=250395631,['Dominus Pittacium']=335080779,['Dominus Praefectus']=527365852,['Dominus Venari']=1483720409,['Dominus Formidulosus']=4255053867}
+local a7={'Valkyrie Helm','Blackvalk','Festive Sword Valkyrie','Tixvalk','Sparkle Time Valkyrie','Violet Valkyrie','Emerald Valkyrie','Ice Valkyrie',
+'Sinister Valk',"Hallow's Valk"}local a8={['Valkyrie Helm']=1365767,['Blackvalk']=124730194,['Festive Sword Valkyrie']=189963816,['Tixvalk']=382881237,[
+'Sparkle Time Valkyrie']=1180433861,['Violet Valkyrie']=1402432199,['Emerald Valkyrie']=2830437685,['Ice Valkyrie']=4390891467,['Sinister Valk']=2738532568,[
+"Hallow's Valk"]=15054110920}local a9 local ba local bb local bc local function bd(be)be=be or av()local bf=be and be:FindFirstChildOfClass('Humanoid')if bf
+then local bg,bh=pcall(function()return bf.RigType end)if bg and(bh==Enum.HumanoidRigType.R6 or bh==Enum.HumanoidRigType.R15)then return bh end end if be and be
+:FindFirstChild('UpperTorso')and be:FindFirstChild('LowerTorso')then return Enum.HumanoidRigType.R15 end if be and be:FindFirstChild('Torso')then return Enum.
+HumanoidRigType.R6 end return Enum.HumanoidRigType.R15 end local function be(bf)return bf==Enum.HumanoidRigType.R6 and'R6'or'R15'end local function bf(bg)local
+bh=bd(bg)al.AvatarRigType=bh if ba then local bi=be(bh)ba.SetText('<b>Detected rig:</b> '..bi)local bj=ba.Container and ba.Container:FindFirstChild(
+'Description')if bj and bj:IsA('TextLabel')then bj.Text=bh==Enum.HumanoidRigType.R6 and
+[[Classic clothing, colors, body packages, faces and rigid accessories use the R6 pipeline. R15-only scaling is ignored.]]or
+'All avatar editor categories use the R15 pipeline.'end end return bh end local function bg(bh,bi)if a9 then a9.SetText('<b>Avatar status:</b> '..tostring(bh))
+end if bi then aF(tostring(bh),bi)end end local function bh()local bi=aw()if bi then local bj,bk=pcall(bi.GetAppliedDescription,bi)if bj and bk then return bk
+end end local bj,bk=pcall(function()return p:GetHumanoidDescriptionFromUserIdAsync(H.UserId)end)if bj and bk then return bk end return Instance.new(
+'HumanoidDescription')end do local bi=bh()al.AvatarOriginalDescription=bi:Clone()al.AvatarDescription=bi:Clone()pcall(function()al.AvatarDescription.
+UseAvatarSettings=false end)bi:Destroy()end local function bi(bj)if not al.AvatarHeadlessOverride or not bj then return end local bk=bj:FindFirstChild('Head')if
+not bk or not bk:IsA('BasePart')then return end bk.Transparency=1 for bl,bm in ipairs(bk:GetChildren())do if bm:IsA('Decal')or bm:IsA('Texture')then bm.
+Transparency=1 end end end local bj={Accessory=true,BodyColors=true,CharacterMesh=true,Pants=true,Shirt=true,ShirtGraphic=true}local bk={'BodyDepthScale',
+'BodyHeightScale','BodyProportionScale','BodyTypeScale','BodyWidthScale','HeadScale'}local bl=setmetatable({},{__mode='k'})local function bm(bn)local bo=bn.
+Archivable bn.Archivable=true local bp,bq=pcall(bn.Clone,bn)bn.Archivable=bo return bp and bq or nil end local function bn(bo)return bo:IsA('Decal')or bo:IsA(
+'Texture')or bo:IsA('SurfaceAppearance')or bo:IsA('SpecialMesh')or bo:IsA('BlockMesh')or bo:IsA('CylinderMesh')end local function bo(bp,bq,br)if bp:IsA(
+'MeshPart')and bq:IsA('MeshPart')then pcall(bq.ApplyMesh,bq,bp)end for bs,bt in ipairs({'Color','Material','MaterialVariant','Reflectance','Transparency'})do
+pcall(function()bq[bt]=bp[bt]end)end if br then pcall(function()bq.Size=bp.Size end)end for bs,bt in ipairs(bq:GetChildren())do if bn(bt)then bt:Destroy()end
+end for bs,bt in ipairs(bp:GetChildren())do if bn(bt)then local bu=bm(bt)if bu then bu.Parent=bq end end end end local function bp(bq)for br,bs in ipairs(bq:
+GetChildren())do if bj[bs.ClassName]then bs:Destroy()end end end local function bq(br,bs,bt)for bu,bv in ipairs(br:GetDescendants())do if bv:IsA('Attachment')
+and bv.Name==bs and not bv:IsDescendantOf(bt)then local bw=bv.Parent if bw and bw:IsA('BasePart')then return bv end end end return nil end local function br(bs)
+local bt=bs:FindFirstChild('Handle')if not bt or not bt:IsA('BasePart')then return nil end for bu,bv in ipairs(bs:GetDescendants())do if bv:IsA('BasePart')then
+bv.CanCollide=false bv.CanQuery=false bv.CanTouch=false bv.Massless=true end if bv:IsA('JointInstance')or bv:IsA('WeldConstraint')then local bw=bv.Part0 local
+bx=bv.Part1 local by=bw and bx and bw:IsDescendantOf(bs)and bx:IsDescendantOf(bs)if bv.Name=='AccessoryWeld'or not by then bv:Destroy()end end end return bt end
+local function bs(bt,bu)local bv=bt:FindFirstChild('Handle')if not bv or not bv:IsA('BasePart')then return false end for bw,bx in ipairs(bv:GetDescendants())do
+if bx:IsA('JointInstance')then local by=bx.Part0 local bz=bx.Part1 if by and bz and by:IsDescendantOf(bu)and bz:IsDescendantOf(bu)and(by:IsDescendantOf(bt)~=bz:
+IsDescendantOf(bt))then return true end elseif bx:IsA('WeldConstraint')then local by=bx.Part0 local bz=bx.Part1 if by and bz and by:IsDescendantOf(bu)and bz:
+IsDescendantOf(bu)and(by:IsDescendantOf(bt)~=bz:IsDescendantOf(bt))then return true end end end return false end local function bt(bu,bv,bw)for bx,by in ipairs(
+bw:GetChildren())do if by:IsA('Attachment')then local bz=bq(bu,by.Name,bv)if bz then bw.CFrame=bz.WorldCFrame*by.CFrame:Inverse()local bA=Instance.new('Weld')bA
+.Name='AccessoryWeld'bA.Part0=bw bA.Part1=bz.Parent bA.C0=by.CFrame bA.C1=bz.CFrame bA.Parent=bw return true end end end local bx=bu:FindFirstChild('Head')if bx
+and bx:IsA('BasePart')then local by=bx:FindFirstChild('HatAttachment')local bz=CFrame.new()pcall(function()bz=bv.AttachmentPoint end)local bA=Instance.new(
+'Weld')bA.Name='AccessoryWeld'bA.Part0=bw bA.Part1=bx bA.C0=bz bA.C1=by and by.CFrame or CFrame.new(0,bx.Size.Y*0.5,0)bw.CFrame=bx.CFrame*bA.C1*bA.C0:Inverse()
+bA.Parent=bw return true end return false end local function bu(bv,bw,bx)local by=bm(bx)if not by then return false end by:SetAttribute('ForgeAvatarApplied',
+true)if by:IsA('Accessory')then local bz=br(by)if not bz then by:Destroy()return false end local bA=pcall(bw.AddAccessory,bw,by)if not bA or not by.Parent then
+by.Parent=bv end if not bs(by,bv)then bt(bv,by,bz)end else by.Parent=bv end return true end local function bv(bw)if bl[bw]then return bl[bw]end local bx=bw and
+bw:FindFirstChildOfClass('Humanoid')if not bx then return nil end local by={Appearance={},BodyParts={},RigType=bd(bw),Scales={}}for bz,bA in ipairs(bw:
+GetChildren())do if bj[bA.ClassName]then local bB=bm(bA)if bB then table.insert(by.Appearance,bB)end elseif bA:IsA('BasePart')and bA.Name~='HumanoidRootPart'
+then local bB=bm(bA)if bB then local bC=Enum.BodyPartR15.Unknown if by.RigType==Enum.HumanoidRigType.R15 then pcall(function()bC=bx:GetBodyPartR15(bA)end)end
+table.insert(by.BodyParts,{BodyPartType=bC,Part=bB})end end end for bz,bA in ipairs(bk)do local bB=bx:FindFirstChild(bA)if bB and bB:IsA('NumberValue')then by.
+Scales[bA]=bB.Value end end bl[bw]=by return by end local function bw(bx,by,bz,bA)if bz==Enum.BodyPartR15.Unknown then return false end local bB=bx:
+FindFirstChild(bA.Name)local bC=bm(bA)if not bC or not bC:IsA('BasePart')then if bC then bC:Destroy()end return false end if bB and bB:IsA('BasePart')then bC.
+CFrame=bB.CFrame bC.CanCollide=bB.CanCollide bC.CanQuery=bB.CanQuery bC.CanTouch=bB.CanTouch bC.Massless=bB.Massless end bC:SetAttribute('ForgeAvatarApplied',
+true)local bD,bE=pcall(by.ReplaceBodyPartR15,by,bz,bC)if bD and bE then return true end bC:Destroy()if bB and bB:IsA('BasePart')then bo(bA,bB,true)return true
+end return false end local function bx(by)local bz=by and by:FindFirstChild('HumanoidRootPart')if not bz or not bz:IsA('BasePart')then return nil end return{
+Root=bz,CFrame=bz.CFrame,LinearVelocity=bz.AssemblyLinearVelocity,AngularVelocity=bz.AssemblyAngularVelocity}end local function by(bz)local bA=bz and bz.Root if
+not bA or not bA.Parent then return end bA.CFrame=bz.CFrame bA.AssemblyLinearVelocity=bz.LinearVelocity bA.AssemblyAngularVelocity=bz.AngularVelocity end local 
+function bz(bA)local bB=bA and bl[bA]local bC=bA and bA:FindFirstChildOfClass('Humanoid')if not bB or not bC then return false end local bD=bB.RigType==Enum.
+HumanoidRigType.R6 and bx(bA)or nil bp(bA)for bE,bF in pairs(bB.Scales)do local bG=bC:FindFirstChild(bE)if bG and bG:IsA('NumberValue')then bG.Value=bF end end
+for bE,bF in ipairs(bB.BodyParts)do local bG=bF.Part if bB.RigType==Enum.HumanoidRigType.R15 then bw(bA,bC,bF.BodyPartType,bG)else local bH=bA:FindFirstChild(bG
+.Name)if bH and bH:IsA('BasePart')then bo(bG,bH,false)end end end for bE,bF in ipairs(bB.Appearance)do bu(bA,bC,bF)end if bB.RigType==Enum.HumanoidRigType.R15
+then pcall(bC.BuildRigFromAttachments,bC)end by(bD)return true end local function bA()for bB,bC in pairs(bl)do for bD,bE in ipairs(bC.Appearance)do bE:Destroy()
+end for bD,bE in ipairs(bC.BodyParts)do bE.Part:Destroy()end bl[bB]=nil end end local function bB(bC,bD)local bE=bC and bC:FindFirstChildOfClass('Humanoid')
+local bF=bD and bD:FindFirstChildOfClass('Humanoid')if not bE or not bF then return false,'Avatar donor is missing its Humanoid'end local bG=bd(bC)local bH=bd(
+bD)if bG~=bH then return false,'Avatar donor '..be(bH)..' rig does not match the local '..be(bG)..' character'end if not bv(bC)then return false,
+'Could not snapshot the local character'end local bI=bG==Enum.HumanoidRigType.R6 and bx(bC)or nil bz(bC)bp(bC)if bG==Enum.HumanoidRigType.R15 then for bJ,bK in
+ipairs(bk)do local bL=bF:FindFirstChild(bK)local bM=bE:FindFirstChild(bK)if bL and bL:IsA('NumberValue')and bM and bM:IsA('NumberValue')then bM.Value=bL.Value
+end end end for bJ,bK in ipairs(bD:GetChildren())do if bK:IsA('BasePart')and bK.Name~='HumanoidRootPart'then if bG==Enum.HumanoidRigType.R15 then local bL=Enum.
+BodyPartR15.Unknown pcall(function()bL=bF:GetBodyPartR15(bK)end)bw(bC,bE,bL,bK)else local bL=bC:FindFirstChild(bK.Name)if bL and bL:IsA('BasePart')then bo(bK,bL
+,false)end end end end for bJ,bK in ipairs(bD:GetChildren())do if bj[bK.ClassName]then bu(bC,bE,bK)end end if bG==Enum.HumanoidRigType.R15 then pcall(bE.
+BuildRigFromAttachments,bE)end bi(bC)by(bI)return true end local function bC(bD)local bE,bF=pcall(bD.GetAccessories,bD,true)if not bE or type(bF)~='table'then
+return false end local bG={}for bH,bI in ipairs(bF)do if bI.IsLayered~=true then table.insert(bG,bI)end end local bH=pcall(bD.SetAccessories,bD,bG,true)return
+bH and#bG<#bF end local function bD(bE,bF)local bG,bH=pcall(function()return p:CreateHumanoidModelFromDescriptionAsync(bE,bF)end)if bG and typeof(bH)==
+'Instance'and bH:IsA('Model')then if bd(bH)==bF then return bH,false,nil end bH:Destroy()bH='Roblox returned a donor with the wrong rig type'elseif bG and
+typeof(bH)=='Instance'then bH:Destroy()end local bI=bH if bF~=Enum.HumanoidRigType.R6 then return nil,false,bI end local bJ=bE:Clone()local bK=bC(bJ)if not bK
+then bJ:Destroy()return nil,false,bI end local bL,bM=pcall(function()return p:CreateHumanoidModelFromDescriptionAsync(bJ,Enum.HumanoidRigType.R6)end)bJ:Destroy(
+)if bL and typeof(bM)=='Instance'and bM:IsA('Model')then if bd(bM)==Enum.HumanoidRigType.R6 then return bM,true,nil end bM:Destroy()bM=
+'Roblox returned a donor with the wrong rig type'elseif bL and typeof(bM)=='Instance'then bM:Destroy()end return nil,false,bM or bI end local function bE(bF,bG)
+if al.Destroyed or not al.AvatarDescription then return end if not bG then al.AvatarHasEdits=true end al.AvatarApplyReason=bF or'Appearance'al.AvatarApplyQueued
+=true if al.AvatarApplying then return end al.AvatarApplying=true task.spawn(function()local bH=true local bI local bJ local bK=false local bL=al.
+AvatarApplyReason while al.AvatarApplyQueued and not al.Destroyed do al.AvatarApplyQueued=false bL=al.AvatarApplyReason or bL local bM=aw()local bN=av()if not
+bM or not bN then bH=false bI='Local character is not ready'break end local bO=bf(bN)bJ=bO local bP=al.AvatarDescription:Clone()bg('Building '..be(bO)..
+' client-side avatar donor...',nil)local bQ,bR,bS=bD(bP,bO)bP:Destroy()if not bQ then bH=false bI='Could not create the '..be(bO)..' local avatar donor: '..
+tostring(bS)break end bK=bK or bR if al.Destroyed or bN~=av()then bQ:Destroy()if not al.Destroyed then al.AvatarApplyQueued=true end continue end local bT,bU,bV
+=pcall(bB,bN,bQ)bQ:Destroy()if not bT then pcall(bz,bN)bH=false bI=tostring(bU)break elseif not bU then pcall(bz,bN)bH=false bI=tostring(bV)break end if bb then
+bb:Refresh()end if bc then bc()end end al.AvatarApplying=false if al.Destroyed then return end if bH then local bM=be(bJ or bd())local bN=bK and
+'; incompatible layered items were skipped'or''bg((bL or'Appearance')..' applied through local '..bM..' donor rig'..bN,'Success')else aE('ERROR',
+'Avatar apply failed:',bI)bg('Apply failed; see Console','Error')end end)end local function bF(bG)if al.Destroyed or not al.AvatarDescription then return false
+end local bH=al.AvatarDescription:Clone()local bI=al.AvatarInspectBridge task.defer(function()if al.Destroyed then bH:Destroy()return end if bI then bI.Bypass=
+true end pcall(w.CloseInspectMenu,w)local bJ,bK=pcall(w.InspectPlayerFromHumanoidDescription,w,bH,(al.LocalDisplayName or H.DisplayName)..(al.LocalVerified and
+F or''))if bI then bI.Bypass=false end task.delay(4,function()pcall(bH.Destroy,bH)end)if bJ then aE('INFO','Opened edited avatar from',bG or'inspect menu')else
+aE('ERROR','Inspect avatar failed:',bK)bg('Roblox inspect menu is unavailable','Error')end end)return true end local function bG(bH)local bI,bJ=pcall(tonumber,
+bH)if bI and bJ==H.UserId then return true end local bK,bL=pcall(function()return H.User end)if not bK or bL==nil then return false end if bH==bL then return
+true end local bM,bN=pcall(function()return bH.Id end)local bO,bP=pcall(function()return bL.Id end)return bM and bO and bN==bP end local function bH()local bI=
+M('hookmetamethod')local bJ=M('getnamecallmethod')local bK=M('newcclosure')local bL=M('checkcaller')local bM=rawget(K,'__ForgeNativeAvatarInspectBridge')if(
+type(bM)~='table'or type(bM.Original)~='function')and bI and bJ then bM={Bypass=false,Handler=nil,Owner=nil}local function bN(bO,...)local bP local bQ=pcall(
+function()bP=bJ()end)if bQ and not bM.Bypass and bO==w and type(bM.Handler)=='function'then local bR,bS=pcall(bM.Handler,bP,...)if bR and bS then return nil end
+end return bM.Original(bO,...)end local bO=bK and bK(bN)or bN local bP,bQ=pcall(bI,game,'__namecall',bO)if bP and type(bQ)=='function'then bM.Original=bQ
+rawset(K,'__ForgeNativeAvatarInspectBridge',bM)else bM=nil end end if type(bM)=='table'and type(bM.Original)=='function'then bM.Owner=al bM.Handler=function(bN,
+...)if al.Destroyed or not al.AvatarHasEdits or not al.AvatarDescription then return false end if bL then local bO,bP=pcall(bL)if bO and bP then return false
+end end local bO=table.pack(...)if bN=='InspectPlayerFromUserId'or bN=='InspectPlayerFromUserIdWithCtx'then if bG(bO[1])then return bF('native Examine Avatar')
+end elseif bN=='InspectPlayerFromHumanoidDescription'then local bP=string.lower(tostring(bO[2]or''))if bP==string.lower(H.Name)or bP==string.lower(H.DisplayName
+)then return bF('native Examine Avatar')end end return false end al.AvatarInspectBridge=bM end local bN=false for bO,bP in ipairs({
+'InspectPlayerFromUserIdRequest','InspectPlayerFromUserIdWithCtxRequest'})do pcall(function()local bQ=w[bP]local bR=bQ:Connect(function(bR)if not al.Destroyed
+and al.AvatarHasEdits and bG(bR)then bF('native Examine Avatar request')end end)au(bR)bN=true end)end return al.AvatarInspectBridge~=nil or bN end local bI=bH()
+local bJ={}local bK=setmetatable({},{__mode='k'})local bL=4 local bM=setmetatable({},{__mode='k'})local bN=setmetatable({},{__mode='k'})local bO=setmetatable({}
+,{__mode='k'})local bP=setmetatable({},{__mode='k'})local function bQ(bR)local bS,bT=pcall(function()return aj.Frame and(bR==aj.Frame or bR:IsDescendantOf(aj.
+Frame))end)return bS and bT or false end local function bR(bS)return tostring(bS or''):gsub('<.->',''):match('^%s*(.-)%s*$')end local function bS(bT)return
+tostring(bT or''):gsub('&','&amp;'):gsub('<','&lt;'):gsub('>','&gt;')end local function bT(bU)local bV=tostring(al.LocalDisplayName or H.DisplayName)if bU then
+bV=bS(bV)end if al.LocalVerified then bV..=F end return bV end local function bU(bV,bW,bX)if bW==''then return bV,false end local bY,bZ=string.find(bV,bW,1,true
+)if not bY then return bV,false end return bV:sub(1,bY-1)..bX..bV:sub(bZ+1),true end local function bV(bW)local bX=tostring(bW or'')local bY={tostring(H.
+DisplayName or''),tostring(H.Name or''),tostring(al.LocalDisplayName or''),tostring(al.LocalUsername or'')}table.sort(bY,function(bZ,b_)return#bZ>#b_ end)local
+bZ={}for b_,b0 in ipairs(bY)do if b0~=''and not bZ[b0]then bZ[b0]=true local b1 bX,b1=bU(bX,b0,bT(true))if b1 then return bX end end end return bX end local 
+function bW()local bX pcall(function()bX=z.OnIncomingMessage end)local bY={}bY.Previous=bX bY.Wrapper=function(bZ)local b_ if type(bX)=='function'then local b0,
+b1=pcall(bX,bZ)if b0 and typeof(b1)=='Instance'and b1:IsA('TextChatMessageProperties')then b_=b1 end end local b0=bZ and bZ.TextSource if b0 and b0.UserId==H.
+UserId then b_=b_ or Instance.new('TextChatMessageProperties')local b1=bZ.PrefixText pcall(function()if b_.PrefixText~=''then b1=b_.PrefixText end end)b_.
+PrefixText=bV(b1)end return b_ end local bZ,b_=pcall(function()z.OnIncomingMessage=bY.Wrapper end)if not bZ then return false,b_ end al.ChatIdentityBridge=bY
+return true end local bX,bY=bW()if not bX then aE('WARN','Local chat identity bridge unavailable:',bY)end local function bZ(b_)return b_:IsA('TextLabel')or b_:
+IsA('TextButton')end local function b_(b0)local b1=bR(b0.Text)b1=b1:gsub(F,''):gsub(' \u{2713}',''):gsub(' \u{2714}','')local b2=H.Name local b3=H.DisplayName
+local b4=al.LocalUsername or b2 local b5=al.LocalDisplayName or b3 local b6={b2}local b7={b3}if b4~=b2 then table.insert(b6,b4)end if b5~=b3 then table.insert(
+b7,b5)end local b8=string.lower(b0:GetFullName())if b8:find('chat',1,true)or b8:find('message',1,true)then local b9={b3..' (@'..b2..')',b5..' (@'..b4..')',b3,b2
+,b5,b4}table.sort(b9,function(ca,cb)return#ca>#cb end)local ca={}for cb,cc in ipairs(b9)do if cc~=''and not ca[cc]then ca[cc]=true if b1:sub(1,#cc)==cc then
+local cd=b1:sub(#cc+1)if cd:match('^%s*:')then local ce,cf=bU(tostring(b0.Text),cc,'{CHATIDENTITY}')if cf then ce=ce:gsub(F,'')return'Chat',ce end return'Chat',
+'{CHATIDENTITY}'..cd end end end end end for b9,ca in ipairs(b7)do for cb,cc in ipairs(b6)do if b1==ca..'\n@'..cc then return'Combined','{DISPLAY}\n@{USERNAME}'
+elseif b1==ca..'\n'..cc then return'Combined','{DISPLAY}\n{USERNAME}'elseif b1==ca..' (@'..cc..')'then return'Combined','{DISPLAY} (@{USERNAME})'elseif b1==ca..
+' @'..cc then return'Combined','{DISPLAY} @{USERNAME}'end end end for b9,ca in ipairs(b6)do if b1=='@'..ca then return'UsernameAt','@{USERNAME}'end end for b9,
+ca in ipairs(b7)do if b1==ca then return'DisplayName','{DISPLAY}'end end for b9,ca in ipairs(b6)do if b1==ca and string.lower(b0.Name):find('user',1,true)then
+return'Username','{USERNAME}'elseif b1==ca then return'DisplayName','{DISPLAY}'end end return nil end local function b0(b1)local b2=bM[b1]if b2 then return b2.
+Kind end return b_(b1)end local function b1(b2,b3,b4,b5,b6)local b7=b2:find('{CHATIDENTITY}',1,true)~=nil local b8=b5 and not b7 and bS(b2)or b2 local b9=b5 and
+bS(b3)or b3 local ca=b5 and bS(b4)or b4 if b6 then ca=ca..F end b8=b8:gsub('{USERNAME}',function()return b9 end)b8=b8:gsub('{DISPLAY}',function()return ca end)
+local cb=b5 and bS(b4)or b4 if b6 then cb..=F end b8=b8:gsub('{CHATIDENTITY}',function()return cb end)return b8 end local function b2(b3,b4)if not b3.Parent
+then return end local b5=al.LocalUsername or H.Name local b6=al.LocalDisplayName or H.DisplayName local b7=al.LocalVerified and(b4.Kind=='Combined'or b4.Kind==
+'DisplayName'or b4.Kind=='Chat')local b8=b4.RichText local b9=b1(b4.Template,b5,b6,b8,b7)bO[b3]=true local ca,cb=pcall(function()if b3.RichText~=b8 then b3.
+RichText=b8 end if b3.Text~=b9 then b3.Text=b9 end end)bO[b3]=nil if not ca then error(cb,0)end end local function b3(b4)local b5=bN[b4]if b5 then b5:
+Disconnect()bN[b4]=nil end bO[b4]=nil bM[b4]=nil end local function b4(b5)if bQ(b5)then return false end local b6=bM[b5]if not b6 then local b7,b8=b_(b5)if not
+b7 then return false end b6={Kind=b7,Template=b8,RichText=b5.RichText,Text=b5.Text}bM[b5]=b6 bN[b5]=b5:GetPropertyChangedSignal('Text'):Connect(function()if al.
+Destroyed or bO[b5]or not b5.Parent then return end local b9,ca=b_(b5)if b9 then if b6.Kind=='Chat'then if b9~='Chat'then b3(b5)return end b6.Template=ca b6.
+RichText=b5.RichText b6.Text=b5.Text end b2(b5,b6)elseif bR(b5.Text)~=''then b3(b5)end end)end b2(b5,b6)return true end local function b5(b6)local b7=b6.Parent
+for b8=1,6 do if not b7 or b7==x then break end if b7:IsA('GuiObject')then local b9=b7.AbsoluteSize if b9.Y>=20 and b9.Y<=180 and b9.X<=1200 then for ca in
+pairs(bM)do if ca.Parent and ca:IsDescendantOf(b7)then return true end end end end b7=b7.Parent end return false end local function b6(b7)if not(b7:IsA(
+'ImageLabel')or b7:IsA('ImageButton'))or bQ(b7)then return false end if b7.Name:sub(1,5)=='Forge'then return false end local b8=b7.AbsoluteSize if b8.X<22 or b8
+.Y<22 or b8.X>180 or b8.Y>180 then return false end local b9=b8.X/math.max(b8.Y,1)if b9<0.55 or b9>1.8 then return false end local ca=string.lower(tostring(b7.
+Image or''))local cb=string.lower(b7.Name)local cc=ca:find('rbxthumb',1,true)or ca:find('avatar',1,true)or ca:find('headshot',1,true)or cb:find('avatar',1,true)
+or cb:find('headshot',1,true)or cb:find('playericon',1,true)if not cc then return false end if ca:find(tostring(H.UserId),1,true)then return true end return b5(
+b7)end local function b7()local b8=0 for b9 in pairs(bJ)do if b9.Parent then b8+=1 end end return b8 end local function b8(b9,ca,cb)local cc=cb.Size*0.5 local
+cd=cb.CFrame local ce=Vector3.new(math.abs(cd.XVector.X)*cc.X+math.abs(cd.YVector.X)*cc.Y+math.abs(cd.ZVector.X)*cc.Z,math.abs(cd.XVector.Y)*cc.X+math.abs(cd.
+YVector.Y)*cc.Y+math.abs(cd.ZVector.Y)*cc.Z,math.abs(cd.XVector.Z)*cc.X+math.abs(cd.YVector.Z)*cc.Y+math.abs(cd.ZVector.Z)*cc.Z)local cf=cb.Position-ce local cg
+=cb.Position+ce if not b9 then return cf,cg end return Vector3.new(math.min(b9.X,cf.X),math.min(b9.Y,cf.Y),math.min(b9.Z,cf.Z)),Vector3.new(math.max(ca.X,cg.X),
+math.max(ca.Y,cg.Y),math.max(ca.Z,cg.Z))end local function b9(ca,cb)local cc=ca:FindFirstChild('Handle')if not cc or not cc:IsA('BasePart')or not cb then return
+false,nil end for cd,ce in ipairs(cc:GetChildren())do if ce:IsA('Attachment')and cb:FindFirstChild(ce.Name)then return true,cc end end return false,cc end local 
+function ca(cb,cc)local cd local ce local cf=cb:FindFirstChild('Head')if cc and cf and cf:IsA('BasePart')then cd,ce=b8(cd,ce,cf)for cg,ch in ipairs(cb:
+GetChildren())do if ch:IsA('Accessory')then local ci,cj=b9(ch,cf)if ci and cj then local ck=(cj.Position-cf.Position).Magnitude local cl=math.max(cj.Size.X,cj.
+Size.Y,cj.Size.Z)if ck<=5 and cl<=8 then cd,ce=b8(cd,ce,cj)end end end end local cg=cb:FindFirstChild('UpperTorso')or cb:FindFirstChild('Torso')local ch=cg and
+cg:IsA('BasePart')and cg.Size.X or cf.Size.X local ci=(cd.X+ce.X)*0.5 local cj=math.max((ce.X-cd.X)*0.5,ch*0.64)cd=Vector3.new(ci-cj,cd.Y-cf.Size.Y*0.72,cd.Z)ce
+=Vector3.new(ci+cj,ce.Y+cf.Size.Y*0.08,ce.Z)else for cg,ch in ipairs(cb:GetChildren())do if ch:IsA('BasePart')and ch.Name~='HumanoidRootPart'then cd,ce=b8(cd,ce
+,ch)end end end if not cd then local cg,ch=cb:GetBoundingBox()return cg.Position,ch end return(cd+ce)*0.5,ce-cd end local function cb(cc,cd,ce,cf)local cg,ch=
+ca(cd,ce)local ci=math.max(cf.X,1)/math.max(cf.Y,1)local cj=math.rad(cc.FieldOfView*0.5)local ck=ch.Y*0.5/math.tan(cj)local cl=ch.X*0.5/math.max(math.tan(cj)*ci
+,0.01)local cm=ce and 1.12 or 1.08 local cn=math.max(ck,cl)*cm+ch.Z*0.5 local co=cg+Vector3.new(0,ce and ch.Y*0.025 or 0,0)cc.CFrame=CFrame.lookAt(co+Vector3.
+new(0,0,-cn),co)return cg,cn end local function cc(cd,ce)local cf=bm(cd)if not cf then return nil end for cg,ch in ipairs(cf:GetDescendants())do if ch:IsA(
+'BasePart')then ch.Anchored=true ch.CanCollide=false ch.CanQuery=false ch.CanTouch=false ch.CastShadow=false pcall(function()ch.LocalTransparencyModifier=0 end)
+elseif ch:IsA('ParticleEmitter')or ch:IsA('Trail')or ch:IsA('Beam')or ch:IsA('Fire')or ch:IsA('Smoke')or ch:IsA('Sparkles')then ch.Enabled=false elseif ch:IsA(
+'Script')or ch:IsA('LocalScript')or ch:IsA('ModuleScript')then ch:Destroy()end end local cg=cf:FindFirstChildOfClass('Humanoid')if cg then pcall(function()cg.
+DisplayDistanceType=Enum.HumanoidDisplayDistanceType.None cg.HealthDisplayType=Enum.HumanoidHealthDisplayType.AlwaysOff end)end cf:PivotTo(CFrame.new())cf.
+Parent=ce return cf end local function cd(ce)local cf={Target=ce,OriginalImageTransparency=ce.ImageTransparency,OriginalClipsDescendants=ce.ClipsDescendants}ce.
+ClipsDescendants=true ce.ImageTransparency=1 local cg=Instance.new('ViewportFrame')cg.Name='ForgeLocalAvatarPreview'cg.Size=UDim2.fromScale(1,1)cg.
+BackgroundTransparency=1 cg.BorderSizePixel=0 cg.ImageColor3=Color3.new(1,1,1)cg.ImageTransparency=0 cg.Ambient=Color3.fromRGB(255,255,255)cg.LightColor=Color3.
+fromRGB(255,255,255)cg.LightDirection=Vector3.new(-0.55,-1,-0.35)cg.ZIndex=ce.ZIndex+3 cg.Parent=ce cf.Viewport=cg local ch=ce:FindFirstChildOfClass('UICorner')
+if ch then local ci=bm(ch)if ci then ci.Parent=cg end end local ci=Instance.new('WorldModel')ci.Parent=cg local cj=Instance.new('Camera')cj.FieldOfView=30 cj.
+Parent=cg cg.CurrentCamera=cj cf.WorldModel=ci cf.Camera=cj function cf:Refresh()ci:ClearAllChildren()local ck=av()if not ck then ce.ImageTransparency=self.
+OriginalImageTransparency return end local cl=cc(ck,ci)if not cl then ce.ImageTransparency=self.OriginalImageTransparency return end ce.ImageTransparency=1
+local cm=string.lower(tostring(ce.Image or''))local cn=string.lower(ce.Name)local co=cm:find('headshot',1,true)~=nil or cn:find('headshot',1,true)~=nil cb(cj,cl
+,co,ce.AbsoluteSize)end function cf:Destroy()if cg.Parent then cg:Destroy()end if ce.Parent then ce.ImageTransparency=self.OriginalImageTransparency ce.
+ClipsDescendants=self.OriginalClipsDescendants end end cf:Refresh()return cf end local function ce(cf)if bJ[cf]then return true end if b7()>=bL or not b6(cf)
+then return false end local cg=cf.ImageTransparency local ch=cf.ClipsDescendants local ci,cj=pcall(cd,cf)if ci and cj then bJ[cf]=cj return true end pcall(
+function()local ck=cf:FindFirstChild('ForgeLocalAvatarPreview')if ck then ck:Destroy()end cf.ImageTransparency=cg cf.ClipsDescendants=ch end)return false end
+local function cf()if al.Destroyed then return end local cg,ch=pcall(x.GetDescendants,x)if not cg then return end for ci,cj in pairs(bJ)do if not ci.Parent or
+not b6(ci)then pcall(cj.Destroy,cj)bJ[ci]=nil end end for ci,cj in ipairs(ch)do if bZ(cj)then pcall(b4,cj)end end for ci,cj in ipairs(ch)do if(cj:IsA(
+'ImageLabel')or cj:IsA('ImageButton'))and not bJ[cj]then pcall(ce,cj)end end end bc=function()for cg,ch in pairs(bJ)do if cg.Parent then pcall(ch.Refresh,ch)
+else bJ[cg]=nil end end end local function cg()local ch=aw()if ch then if bP[ch]==nil then bP[ch]=ch.DisplayName end pcall(function()ch.DisplayName=(al.
+LocalDisplayName or H.DisplayName)..(al.LocalVerified and F or'')end)end for ci,cj in pairs(bM)do if ci.Parent then pcall(b2,ci,cj)else b3(ci)end end pcall(cf)
+end local function ch(ci,cj,ck,cl)local cm=tostring(ci or''):gsub('[%c\r\n]',''):match('^%s*(.-)%s*$')if cl then cm=cm:gsub('^@+','')end if cm==''then cm=cj end
+return cm:sub(1,ck)end local function ci()for cj,ck in pairs(bJ)do pcall(ck.Destroy,ck)bJ[cj]=nil end for cj,ck in pairs(bM)do local cl=bN[cj]if cl then cl:
+Disconnect()bN[cj]=nil end if cj.Parent then pcall(function()bO[cj]=true cj.RichText=ck.RichText cj.Text=ck.Text bO[cj]=nil end)end bO[cj]=nil bM[cj]=nil end
+for cj,ck in pairs(bP)do if cj.Parent then pcall(function()cj.DisplayName=ck end)end bP[cj]=nil end end local function cj(ck)if bQ(ck)or ck.Name:sub(1,5)==
+'Forge'then return end if bZ(ck)or ck:IsA('ImageLabel')or ck:IsA('ImageButton')then bK[ck]={Attempts=0,NextAttempt=0}end end au(x.DescendantAdded:Connect(
+function(ck)cj(ck)end))local ck=0 au(q.RenderStepped:Connect(function(cl)if al.Destroyed then return end ck+=cl if ck<0.15 then return end ck=0 for cm,cn in
+pairs(bM)do if cm.Parent then pcall(b2,cm,cn)else b3(cm)end end local cm=aw()if cm then if bP[cm]==nil then bP[cm]=cm.DisplayName end local cn=(al.
+LocalDisplayName or H.DisplayName)..(al.LocalVerified and F or'')if cm.DisplayName~=cn then pcall(function()cm.DisplayName=cn end)end end end))task.spawn(
+function()pcall(cf)local cl=os.clock()+10 while not al.Destroyed do local cm=os.clock()local cn=0 for co,cp in pairs(bK)do if cn>=40 then break end if not co.
+Parent then bK[co]=nil elseif cm>=cp.NextAttempt then cn+=1 local cq=false if bZ(co)then local cr,cs=pcall(b4,co)cq=cr and cs else local cr,cs=pcall(ce,co)cq=cr
+and cs end if cq or cp.Attempts>=3 then bK[co]=nil else cp.Attempts+=1 cp.NextAttempt=cm+0.08*cp.Attempts end end end if cm>=cl and next(bK)==nil then pcall(cf)
+cl=cm+10 elseif cm>=cl then cl=cm+1 end task.wait(0.05)end end)local function cl(cm)local cn={}local co={}for cp in tostring(cm or''):gmatch('%d+')do local cq=
+tonumber(cp)if cq and cq>0 and not co[cq]then co[cq]=true table.insert(cn,cq)end end return cn end local function cm(cn,co,cp)local cq=table.create(#cp)for cr,
+cs in ipairs(cp)do cq[cr]=tostring(cs)end cn[co]=table.concat(cq,',')end local function cn(co,cp,cq)local cr=cl(co[cp])for cs,ct in ipairs(cr)do if ct==cq then
+return end end table.insert(cr,cq)cm(co,cp,cr)end local function co(cp)local cq,cr=pcall(function()return v:GetProductInfoAsync(cp,Enum.InfoType.Asset)end)if
+not cq or type(cr)~='table'then return nil,nil,tostring(cr)end local cs for ct,cu in ipairs(Enum.AssetType:GetEnumItems())do if cu.Value==cr.AssetTypeId then cs
+=cu.Name break end end return cs and a_[cs]or nil,cr.Name,cs end local function cp(cq,cr)local cs=al.AvatarDescription local ct=aZ[cr]if not cs or not ct then
+return false,'Choose a supported avatar category'end if ct.Kind=='Csv'then cn(cs,ct.Property,cq)elseif ct.Kind=='Property'then cs[ct.Property]=cq elseif ct.Kind
+=='Layered'then local cu,cv=pcall(function()return Enum.AccessoryType[ct.AccessoryType]end)if not cu or not cv then return false,
+'This client does not support that accessory type'end local cw=cs:GetAccessories(true)for cx=#cw,1,-1 do if tonumber(cw[cx].AssetId)==cq then table.remove(cw,cx
+)end end table.insert(cw,{AssetId=cq,AccessoryType=cv,Order=#cw+1})cs:SetAccessories(cw,true)end return true end local function cq(cr)local cs=al.
+AvatarDescription if not cs then return false end local ct=false for cu,cv in ipairs(a0)do local cw={}for cx,cy in ipairs(cl(cs[cv]))do if cy==cr then ct=true
+else table.insert(cw,cy)end end cm(cs,cv,cw)end for cu,cv in ipairs(a1)do if tonumber(cs[cv])==cr then cs[cv]=0 ct=true end end local cu=cs:GetAccessories(true)
+for cv=#cu,1,-1 do if tonumber(cu[cv].AssetId)==cr then table.remove(cu,cv)ct=true end end cs:SetAccessories(cu,true)if cr==134082579 then al.
+AvatarHeadlessOverride=false end return ct end local function cr(cs,ct)local cu=cs[ct]if not cu then return false end for cv,cw in pairs(cs)do cq(cw)end cn(al.
+AvatarDescription,'HatAccessory',cu)al.AvatarEffectAssetId=cu return true end local function cs(ct)local cu={}local cv=aj.Theme local cw=Instance.new('Frame')cw
+.Name='ForgeAvatarPreview'cw.Size=UDim2.new(1,-12,0,245)cw.Position=UDim2.fromOffset(6,0)cw.BackgroundColor3=cv.Element cw.BorderSizePixel=0 cw.ClipsDescendants
+=true cw.Parent=ct.Container cu.Container=cw local cx=Instance.new('UICorner')cx.CornerRadius=UDim.new(0,12)cx.Parent=cw local cy=Instance.new('UIStroke')cy.
+Color=Color3.new(1,1,1)cy.Thickness=1.25 cy.Transparency=0.2 cy.Parent=cw local cz=Instance.new('UIGradient')cz.Color=ColorSequence.new(cv.Accent,cv.AccentLine)
+cz.Parent=cy C:Create(cz,TweenInfo.new(3.4,Enum.EasingStyle.Linear,Enum.EasingDirection.InOut,-1),{Rotation=360}):Play()local cA=Instance.new('ViewportFrame')cA
+.Name='LiveAvatar'cA.Size=UDim2.new(0.58,-10,1,-20)cA.Position=UDim2.fromOffset(10,10)cA.BackgroundTransparency=1 cA.BorderSizePixel=0 cA.ImageColor3=Color3.
+new(1,1,1)cA.ImageTransparency=0 cA.Ambient=Color3.fromRGB(255,255,255)cA.LightColor=Color3.fromRGB(255,255,255)cA.LightDirection=Vector3.new(-0.55,-1,-0.35)cA.
+ZIndex=2 cA.Parent=cw local cB=Instance.new('UICorner')cB.CornerRadius=UDim.new(0,9)cB.Parent=cA local cC=Instance.new('Frame')cC.Name='AvatarStage'cC.Size=cA.
+Size cC.Position=cA.Position cC.BackgroundColor3=Color3.fromRGB(24,37,43)cC.BorderSizePixel=0 cC.ZIndex=1 cC.Parent=cw local cD=Instance.new('UICorner')cD.
+CornerRadius=UDim.new(0,9)cD.Parent=cC local cE=Instance.new('UIGradient')cE.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(30,45,52)),
+ColorSequenceKeypoint.new(0.55,Color3.fromRGB(21,46,49)),ColorSequenceKeypoint.new(1,Color3.fromRGB(17,29,43))})cE.Rotation=115 cE.Parent=cC local cF=Instance.
+new('WorldModel')cF.Parent=cA local cG=Instance.new('Camera')cG.FieldOfView=32 cG.Parent=cA cA.CurrentCamera=cG cu.WorldModel=cF cu.Camera=cG local cH=Instance.
+new('TextLabel')cH.Size=UDim2.new(0.42,-18,0,42)cH.Position=UDim2.new(0.58,2,0,20)cH.BackgroundTransparency=1 cH.Text='LOCAL AVATAR\nLIVE PREVIEW'cH.Font=Enum.
+Font.BuilderSansExtraBold cH.TextSize=17 cH.TextColor3=cv.TextPrimary cH.TextXAlignment=Enum.TextXAlignment.Left cH.TextYAlignment=Enum.TextYAlignment.Top cH.
+Parent=cw cu.Title=cH local cI=Instance.new('TextLabel')cI.Size=UDim2.fromOffset(94,24)cI.Position=UDim2.new(0.58,2,0,72)cI.BackgroundColor3=cv.Accent cI.
+BackgroundTransparency=0.82 cI.BorderSizePixel=0 cI.Text='\u{25cf} CLIENT ONLY'cI.Font=Enum.Font.BuilderSansBold cI.TextSize=12 cI.TextColor3=cv.Accent cI.
+Parent=cw local cJ=Instance.new('UICorner')cJ.CornerRadius=UDim.new(1,0)cJ.Parent=cI cu.Badge=cI C:Create(cI,TweenInfo.new(0.9,Enum.EasingStyle.Sine,Enum.
+EasingDirection.InOut,-1,true),{BackgroundTransparency=0.62,TextColor3=cv.AccentLine}):Play()local cK=Instance.new('TextLabel')cK.Size=UDim2.new(0.42,-18,0,106)
+cK.Position=UDim2.new(0.58,2,0,110)cK.BackgroundTransparency=1 cK.Text=
+[[Edits persist through respawns and mirror into supported player-card and ESC previews using the equipped local character.]]cK.TextWrapped=true cK.Font=cv.Font
+cK.TextSize=14 cK.TextColor3=cv.TextSecondary cK.TextXAlignment=Enum.TextXAlignment.Left cK.TextYAlignment=Enum.TextYAlignment.Top cK.Parent=cw cu.Note=cK local 
+function cL(cM)local cN=cM while cN and cN~=x do if cN:IsA('GuiObject')and not cN.Visible then return false end cN=cN.Parent end return cM.AbsoluteSize.X>2 and
+cM.AbsoluteSize.Y>2 end function cu:Refresh()cF:ClearAllChildren()local cM=av()if not cM then return end local cN=cc(cM,cF)if not cN then return end cu.Model=cN
+cu.Center,cu.Distance=cb(cG,cN,false,cA.AbsoluteSize)end function cu:ApplyTheme(cM)cw.BackgroundColor3=cM.Element cH.TextColor3=cM.TextPrimary cI.
+BackgroundColor3=cM.Accent cI.TextColor3=cM.Accent cK.Font=cM.Font cK.TextColor3=cM.TextSecondary end function cu:Destroy()cw:Destroy()end table.insert(ct.
+Components,cu)cu:Refresh()local cM=math.pi au(q.RenderStepped:Connect(function(cN)if not cL(cw)or not cu.Model or not cu.Model.Parent then return end cM+=cN*
+0.18 local cO=cu.Center local cP=cu.Distance cG.CFrame=CFrame.lookAt(cO+Vector3.new(math.sin(cM)*cP,cP*0.08,math.cos(cM)*cP),cO)end))return cu end ap:BoldLabel(
+{Text='Forge local avatar studio',Description=[[Try catalog assets and complete outfits without changing your Roblox account avatar.]]})bb=cs(ap)a9=ap:Label({
+Text='<b>Avatar status:</b> Ready',Description=[[The edited description is automatically reapplied after every local respawn.]]})ba=ap:Label({Text=
+'<b>Detected rig:</b> Detecting...',Description=[[Forge automatically selects the matching local avatar pipeline.]]})bf()ap:Divider()ap:BoldLabel({Text=
+'Local identity and Roblox UI sync',Description=
+[[Keeps local chat, nameplate, player card, leaderboard hover and ESC row in sync. Account data and other clients stay unchanged.]]})local ct local cu=ap:Input(
+{Text='Local username',Description='Shown after @ inside supported Roblox CoreGui surfaces.',Default=al.LocalUsername,Placeholder=H.Name,ClearTextOnFocus=false,
+Flag='LocalAvatarUsername',Callback=function(cu,cv)if cv and ct then ct()end end})ab(cu,250,8)local cv=ap:Input({Text='Local display name',Description=
+[[Shown on your character nameplate and supported local player cards.]],Default=al.LocalDisplayName,Placeholder=H.DisplayName,ClearTextOnFocus=false,Flag=
+'LocalAvatarDisplayName',Callback=function(cv,cw)if cw and ct then ct()end end})ab(cv,250,8)local cw=ap:Label({Text='<b>Local preview:</b> '..bS(al.
+LocalDisplayName)..'  @'..bS(al.LocalUsername),Description=
+[[Press Enter in either field or use Apply names. Roblox may recreate these surfaces; Forge now reapplies the local identity reactively.]]})local function cx()
+local cy=al.LocalVerified and F or''cw:SetText('<b>Local preview:</b> '..bS(al.LocalDisplayName)..cy..'  @'..bS(al.LocalUsername))end ct=function()al.
+LocalUsername=ch(cu:GetValue(),H.Name,20,true)al.LocalDisplayName=ch(cv:GetValue(),H.DisplayName,32,false)cu:SetValue(al.LocalUsername,true)cv:SetValue(al.
+LocalDisplayName,true)cg()cx()bg('Local identity applied to Roblox UI and chat','Success')end local cy cy=ap:Toggle({Text='Roblox verified badge',Description=
+[[Use Roblox's native blue verified glyph beside the display name in supported Roblox UI and on your character nameplate.]],Default=al.LocalVerified,Flag=
+'LocalAvatarVerified',Callback=function(cz)al.LocalVerified=cz cg()cx()bg(cz and'Roblox verified badge enabled locally'or'Roblox verified badge disabled','Info'
+)end})local cz=ap:Columns({Ratio={1,1},Gap=8,StackOnCompact=true})cz:Column(1):Button({Text='Apply local names',Icon='badge-check',Callback=function()ct()end})
+cz:Column(2):Button({Text='Reset identity',Icon='rotate-ccw',Callback=function()al.LocalUsername=H.Name al.LocalDisplayName=H.DisplayName al.LocalVerified=false
+cu:SetValue(al.LocalUsername,true)cv:SetValue(al.LocalDisplayName,true)cy:SetValue(false)cg()cx()bg('Local identity reset','Info')end})ap:Divider()ap:BoldLabel(
+{Text='Catalog asset loader',Description='Equip any supported avatar asset by ID.'})local function cA(cB)local cC=tostring(cB or''):match('^%s*(.-)%s*$')local
+cD=cC:match('^%d+$')local cE=cC:match('[?&]id=(%d+)')local cF=cC:match('/(%d+)')local cG=tonumber(cD or cE or cF)return cG and cG>0 and cG or nil end local cB=
+'Auto detect'local cC=ap:Input({Text='Catalog asset ID',Description=
+[[Enter an asset ID or paste a Roblox catalog URL. The value stays in the field after Enter.]],Placeholder='1365767',ClearTextOnFocus=false,Flag='AvatarAssetId'
+})ab(cC,250,8)ap:Dropdown({Text='Asset category',Description=[[Auto detect uses Roblox marketplace metadata; choose manually if detection fails.]],Options=aY,
+Default=cB,Flag='AvatarAssetCategory',Callback=function(cD)cB=cD end})local cD=ap:Columns({Ratio={1,1},Gap=8,StackOnCompact=true})cD:Column(1):Button({Text=
+'Equip asset',Description='Add or replace the selected local avatar slot.',Icon='plus',Callback=function()local cE=cA(cC:GetValue())if not cE or cE<=0 then bg(
+'Enter a valid catalog asset ID','Warning')return end task.spawn(function()local cF=cB local cG='Asset '..tostring(cE)if cF=='Auto detect'then local cH,cI,cJ=
+co(cE)if not cH then bg('Could not detect type '..tostring(cJ or''),'Warning')return end cF=cH cG=cI or cG end local cH,cI,cJ=pcall(cp,cE,cF)if not cH or not cI
+then bg('Could not equip asset: '..tostring(cJ or cI),'Error')return end local cK=aZ[cF]if cK and cK.Kind=='Csv'then al.AvatarEffectAssetId=cE end bE(cG)end)end
+})cD:Column(2):Button({Text='Remove asset',Description='Remove this ID from every edited avatar slot.',Icon='minus',Callback=function()local cE=cA(cC:GetValue()
+)if not cE or cE<=0 then bg('Enter a valid catalog asset ID','Warning')return end local cF,cG=pcall(cq,cE)if not cF or not cG then bg(
+'That asset is not equipped','Info')return end if tonumber(al.AvatarEffectAssetId)==cE then al.AvatarEffectAssetId=nil end bE('Asset removed')end})ap:Divider()
+ap:BoldLabel({Text='Iconic collection selectors',Description=[[Complete classic families with one consistent select-and-equip workflow.]]})local cE=a2[1]ap:
+Dropdown({Text='Body preset',Description='Select a classic local body modification.',Options=a2,Default=cE,Flag='BodyPreset',Callback=function(cF)cE=cF end})ap:
+Button({Text='Apply selected body preset',Icon='wand-sparkles',Callback=function()if cE=='Headless Head'then al.AvatarDescription.Head=134082579 al.
+AvatarHeadlessOverride=true bE('Headless Head')else al.AvatarDescription.RightLeg=139607718 bE('Korblox Deathspeaker right leg')end end})local cF=a3[1]ap:
+Dropdown({Text='Classic horns collection',Description='Fiery, Frozen and Poisoned \u{2014} every item in the original elemental horns trio.',Options=a3,Default=
+cF,Flag='HornsPreset',Callback=function(cG)cF=cG end})ap:Button({Text='Equip selected horns',Description='Add the selected horns to the edited avatar.',Icon=
+'flame',Callback=function()if cr(a4,cF)then bE(cF)end end})local cG='Dominus Empyreus'ap:Dropdown({Text='Dominus preset',Description=
+[[Choose from the complete classic collection included with Forge.]],Options=a5,Default=cG,Flag='DominusPreset',Callback=function(cH)cG=cH end})ap:Button({Text=
+'Equip selected Dominus',Description='Add the selected classic Dominus to the edited avatar.',Icon='crown',Callback=function()if cr(a6,cG)then bE(cG)end end})
+local cH='Valkyrie Helm'ap:Dropdown({Text='Valkyrie preset',Description=[[Classic, event and modern Roblox Valkyrie releases included with Forge.]],Options=a7,
+Default=cH,Flag='ValkPreset',Callback=function(cI)cH=cI end})ap:Button({Text='Equip selected Valkyrie',Description=
+[[Add the selected classic Valkyrie helm to the edited avatar.]],Icon='crown',Callback=function()if cr(a8,cH)then bE(cH)end end})ap:Divider()ap:BoldLabel({Text=
+'Complete looks',Description="Load another user's current avatar or a Roblox outfit ID."})local cI=ap:Input({Text='User ID, username, or outfit ID',Description=
+[[Load User accepts an ID, username, or @username. Load Outfit requires a numeric outfit ID.]],Placeholder=H.Name..' or '..tostring(H.UserId),ClearTextOnFocus=
+false,Flag='AvatarLookId'})ab(cI,250,8)local cJ=ap:Columns({Ratio={1,1},Gap=8,StackOnCompact=true})cJ:Column(1):Button({Text='Load user avatar',Icon=
+'user-round',Callback=function()local cK=tostring(cI:GetValue()or''):match('^%s*(.-)%s*$')if cK==''then bg('Enter a user ID or username','Warning')return end
+task.spawn(function()local cL=tonumber(cK:match('^%d+$'))if not cL then local cM=cK:gsub('^@+','')local cN,cO=pcall(p.GetUserIdFromNameAsync,p,cM)if not cN or
+not cO then bg('Could not resolve username '..cM,'Error')return end cL=cO end local cM,cN=pcall(function()return p:GetHumanoidDescriptionFromUserIdAsync(cL)end)
+if not cM or not cN then bg("Could not load that user's avatar",'Error')return end al.AvatarDescription:Destroy()al.AvatarDescription=cN pcall(function()al.
+AvatarDescription.UseAvatarSettings=false end)al.AvatarHeadlessOverride=false al.AvatarEffectAssetId=nil bE('User avatar')end)end})cJ:Column(2):Button({Text=
+'Load outfit',Icon='shirt',Callback=function()local cK=tonumber(tostring(cI:GetValue()or''):match('^%s*(%d+)%s*$'))if not cK or cK<=0 then bg(
+'Enter a valid outfit ID','Warning')return end task.spawn(function()local cL,cM=pcall(function()return p:GetHumanoidDescriptionFromOutfitIdAsync(cK)end)if not
+cL or not cM then bg('Could not load that outfit','Error')return end al.AvatarDescription:Destroy()al.AvatarDescription=cM pcall(function()al.AvatarDescription.
+UseAvatarSettings=false end)al.AvatarHeadlessOverride=false al.AvatarEffectAssetId=nil bE('Outfit')end)end})local cK=ap:Collapsible('Body color and scaling',{
+DefaultOpen=false})cK:ColorPicker({Text='Body color',Description='Apply one color to every body part.',Default=al.AvatarDescription.HeadColor,Flag=
+'AvatarBodyColor',Callback=function(cL)for cM,cN in ipairs({'HeadColor','TorsoColor','LeftArmColor','RightArmColor','LeftLegColor','RightLegColor'})do al.
+AvatarDescription[cN]=cL end bE('Body color')end})for cL,cM in ipairs({{Text='Height',Property='HeightScale',Min=0.9,Max=1.05},{Text='Width',Property=
+'WidthScale',Min=0.7,Max=1},{Text='Head size',Property='HeadScale',Min=0.95,Max=1},{Text='Body type',Property='BodyTypeScale',Min=0,Max=1},{Text='Proportion',
+Property='ProportionScale',Min=0,Max=1}})do local cN=cM.Text local cO=cM.Property local cP=cM.Min local cQ=cM.Max cK:Slider({Text=cN,Min=cP,Max=cQ,Step=0.05,
+Default=math.clamp(al.AvatarDescription[cO],cP,cQ),Suffix='',Flag='Avatar'..cO,Callback=function(cR)if bd()==Enum.HumanoidRigType.R6 then bg(cN..
+' is an R15-only setting; the current character is R6','Info')return end al.AvatarDescription[cO]=cR bE(cN)end})end ap:Divider()local cL=ap:Columns({Ratio={1,1}
+,Gap=8,StackOnCompact=true})cL:Column(1):Button({Text='Inspect edited avatar',Description=bI and
+[[Open the edited inspect menu. The native Examine Avatar action is bridged too.]]or[[Open Roblox's local inspect menu using the edited description.]],Icon=
+'scan-eye',Callback=function()if bF('Avatar Editor button')then bg('Opened Roblox inspect menu','Info')end end})cL:Column(2):Button({Text='Refresh preview',
+Description='Rebuild the rotating local avatar preview.',Icon='refresh-cw',Callback=function()bb:Refresh()bg('Preview refreshed','Info')end})local cM=ap:
+Columns({Ratio={1,1,1},Gap=8,StackOnCompact=true})cM:Column(1):Button({Text='Clear accessories',Icon='eraser',Callback=function()for cN,cO in ipairs(a0)do al.
+AvatarDescription[cO]=''end al.AvatarDescription:SetAccessories({},true)al.AvatarEffectAssetId=nil bE('Accessories cleared')end})cM:Column(2):Button({Text=
+'Clear clothing',Icon='eraser',Callback=function()al.AvatarDescription.GraphicTShirt=0 al.AvatarDescription.Shirt=0 al.AvatarDescription.Pants=0 local cN=al.
+AvatarDescription:GetAccessories(true)for cO=#cN,1,-1 do local cP=tostring(cN[cO].AccessoryType)if cP:find('Shirt')or cP:find('Pants')or cP:find('Jacket')or cP:
+find('Sweater')or cP:find('Shorts')or cP:find('Shoe')or cP:find('DressSkirt')then table.remove(cN,cO)end end al.AvatarDescription:SetAccessories(cN,true)bE(
+'Clothing cleared')end})cM:Column(3):Button({Text='Restore original',Icon='rotate-ccw',Callback=function()al.AvatarDescription:Destroy()al.AvatarDescription=al.
+AvatarOriginalDescription:Clone()pcall(function()al.AvatarDescription.UseAvatarSettings=false end)al.AvatarHeadlessOverride=false al.AvatarEffectAssetId=nil bE(
+'Original avatar')end})local cN={Gravity=workspace.Gravity,Brightness=s.Brightness,ClockTime=s.ClockTime,GlobalShadows=s.GlobalShadows,FogEnd=s.FogEnd,FogStart=
+s.FogStart,Ambient=s.Ambient,OutdoorAmbient=s.OutdoorAmbient,FieldOfView=workspace.CurrentCamera and workspace.CurrentCamera.FieldOfView or 70}local cO=
+setmetatable({},{__mode='k'})local function cP(cQ)if cQ then s.Brightness=2 s.ClockTime=14 s.GlobalShadows=false s.Ambient=Color3.fromRGB(178,178,178)s.
+OutdoorAmbient=Color3.fromRGB(178,178,178)else s.Brightness=cN.Brightness s.ClockTime=cN.ClockTime s.GlobalShadows=cN.GlobalShadows s.Ambient=cN.Ambient s.
+OutdoorAmbient=cN.OutdoorAmbient end end local function cQ(cR)if cR then s.FogStart=0 s.FogEnd=1000000 else s.FogStart=cN.FogStart s.FogEnd=cN.FogEnd end end aq
+:BoldLabel({Text='Client environment',Description='Visual changes only affect your client.'})aq:Toggle({Text='Full bright',Description=
+'Use bright neutral local lighting.',Default=false,Flag='FullBright',Callback=cP})aq:Toggle({Text='Remove fog',Description=
+'Push the local fog distance far away.',Default=false,Flag='NoFog',Callback=cQ})aq:Toggle({Text='Disable post effects',Description=
+[[Disable local blur, bloom, color correction and depth of field.]],Default=false,Flag='DisableEffects',Callback=function(cR)if cR then for cS,cT in ipairs(s:
+GetChildren())do if cT:IsA('PostEffect')then cO[cT]=cT.Enabled cT.Enabled=false end end else for cS,cT in pairs(cO)do if cS.Parent then cS.Enabled=cT end cO[cS]
+=nil end end end})aq:Slider({Text='Camera field of view',Min=30,Max=120,Step=1,Default=cN.FieldOfView,Suffix='\u{b0}',Flag='CameraFov',Callback=function(cR)
+local cS=workspace.CurrentCamera if cS then cS.FieldOfView=cR end end})aq:Slider({Text='Clock time',Min=0,Max=24,Step=0.25,Default=cN.ClockTime,Suffix='h',Flag=
+'ClockTime',Callback=function(cR)s.ClockTime=cR end})aq:Slider({Text='Gravity',Min=0,Max=400,Step=1,Default=cN.Gravity,Suffix='',Flag='Gravity',Callback=
+function(cR)workspace.Gravity=cR end})local function cR(cS,cT)local cU=M('setclipboard')or M('toclipboard')if not cU then aF('Clipboard function is unavailable'
+,'Warning')return end local cV,cW=pcall(cU,tostring(cT))if cV then aF(cS..' copied','Success')else aE('ERROR',cW)aF('Clipboard operation failed','Error')end end
+local function cS()local cT={}for cU,cV in ipairs(p:GetPlayers())do if cV~=H then table.insert(cT,cV.Name)end end table.sort(cT)if#cT==0 then table.insert(cT,
+'No other players')end return cT end ar:BoldLabel({Text='Player targeting'})local cT=cS()local cU=cT[1]local cV=ar:Dropdown({Text='Target player',Description=
+[[Select another player for teleport, spectate, fling, follow and orbit tools.]],Options=cT,Default=cU,Callback=function(cV)cU=cV end})local function cW()return
+cU~='No other players'and p:FindFirstChild(cU)or nil end local cX local cY local function cZ()al.TargetFollowEnabled=false al.TargetOrbitEnabled=false if cX
+then cX:SetValue(false,true,true)end if cY then cY:SetValue(false,true,true)end end local function c_()local c0=aw()if c0 and workspace.CurrentCamera then
+workspace.CurrentCamera.CameraSubject=c0 end end local function c0()cZ()al.FlingToken=nil c_()end local function c1()if al.FlingToken then aF(
+'A fling is already running','Warning')return end if al.NoclipEnabled then aF('Disable Noclip before using Fling','Warning')return end local c2=cW()local c3=c2
+and c2.Character local c4=c3 and c3:FindFirstChild('HumanoidRootPart')local c5=c3 and c3:FindFirstChildOfClass('Humanoid')local c6=ax()local c7=aw()if not c2 or
+not c3 or not c4 or not c4:IsA('BasePart')or not c5 or c5.Health<=0 or not c6 or not c6:IsA('BasePart')or not c7 then aF(
+'Target or local character is unavailable','Warning')return end if c6.Anchored then aF('The local character root is anchored','Warning')return end cZ()local c8=
+{}al.FlingToken=c8 local c9=c6.CFrame local da=c7.AutoRotate aF('Flinging '..c2.Name..'\u{2026}','Warning')task.spawn(function()local db local dc,dd=xpcall(
+function()c7.AutoRotate=false db=Instance.new('BodyAngularVelocity')db.Name='ForgeTargetFling'db.AngularVelocity=Vector3.new(0,n,0)db.MaxTorque=Vector3.new(1e9,
+1e9,1e9)db.P=1e9 db.Parent=c6 local dc=os.clock()while al.FlingToken==c8 and not al.Destroyed and c6.Parent and c4.Parent and c5.Health>0 and os.clock()-dc<j do
+local dd=os.clock()-dc local de=c4.AssemblyLinearVelocity if de.Magnitude>300 then de=de.Unit*300 end local df=c4.Position+de*o local dg=dd*l local dh=math.sin(
+dd*8)*0.25 local di=CFrame.new(df)*c4.CFrame.Rotation*CFrame.Angles(0,dg,0)local dj=(di*CFrame.new(k,dh,0)).Position local dk=dj-df local dl=Vector3.new(-dk.Z,0
+,dk.X)if dl.Magnitude<0.01 then dl=c4.CFrame.RightVector else dl=dl.Unit end local dm=de+dl*m local dn=Vector3.new(0,n,0)c6.CFrame=CFrame.lookAt(dj,df)db.
+AngularVelocity=dn c6.AssemblyLinearVelocity=dm c6.AssemblyAngularVelocity=dn q.Stepped:Wait()end end,debug.traceback)if db then db:Destroy()end if c7.Parent
+then c7.AutoRotate=da c7:ChangeState(Enum.HumanoidStateType.GettingUp)end if c6.Parent then c6.AssemblyLinearVelocity=Vector3.zero c6.AssemblyAngularVelocity=
+Vector3.zero c6.CFrame=c9+Vector3.new(0,3,0)end if al.FlingToken==c8 then al.FlingToken=nil end if not al.Destroyed then if dc then aF('Fling finished',
+'Success')else aE('ERROR',dd)aF('Fling failed; see Console','Error')end end end)end local c2=ar:Columns({Ratio={1,1,1},Gap=8,StackOnCompact=true})c2:Column(1):
+Button({Text='Refresh',Icon='refresh-cw',Callback=function()local c3=cS()cU=c3[1]cV:SetOptions(c3,cU,true)aF('Player list refreshed','Info')end})c2:Column(2):
+Button({Text='Teleport',Icon='navigation',Callback=function()local c3=cW()local c4=c3 and c3.Character and c3.Character:FindFirstChild('HumanoidRootPart')local
+c5=ax()if not c4 or not c5 then aF('Target character is unavailable','Warning')return end c5.CFrame=c4.CFrame*CFrame.new(0,0,3)end})c2:Column(3):Button({Text=
+'Spectate',Icon='eye',Callback=function()local c3=cW()local c4=c3 and c3.Character and c3.Character:FindFirstChildOfClass('Humanoid')if c4 and workspace.
+CurrentCamera then workspace.CurrentCamera.CameraSubject=c4 aF('Spectating '..c3.Name,'Info')else aF('Target humanoid is unavailable','Warning')end end})ar:
+Button({Text='Stop spectating',Description='Return the camera to your local character.',Icon='eye-off',Callback=function()c_()aF('Spectating stopped','Info')end
+})local c3=ar:Columns({Ratio={1,1,1},Gap=8,StackOnCompact=true})c3:Column(1):Button({Text='Fling',Description=
+'Use local character physics against the selected target.',Icon='rotate-cw',Callback=c1})c3:Column(2):Button({Text='Copy UserId',Description=
+"Copy the selected player's UserId.",Icon='copy',Callback=function()local c4=cW()if c4 then cR('Target UserId',c4.UserId)else aF('No target player is selected',
+'Warning')end end})c3:Column(3):Button({Text='Copy username',Description="Copy the selected player's account name.",Icon='copy',Callback=function()local c4=cW()
+if c4 then cR('Target username',c4.Name)else aF('No target player is selected','Warning')end end})cX=ar:Toggle({Text='Follow target',Description=
+'Continuously stay behind the selected player.',Default=false,Flag='FollowTarget',Callback=function(c4)al.TargetFollowEnabled=c4 if c4 then al.FlingToken=nil al
+.TargetOrbitEnabled=false if cY then cY:SetValue(false,true,true)end end end})ar:Slider({Text='Follow distance',Min=2,Max=20,Step=1,Default=al.
+TargetFollowDistance,Suffix=' studs',Flag='FollowDistance',Callback=function(c4)al.TargetFollowDistance=c4 end})cY=ar:Toggle({Text='Orbit target',Description=
+[[Move the local character in a circle around the selected player.]],Default=false,Flag='OrbitTarget',Callback=function(c4)al.TargetOrbitEnabled=c4 if c4 then
+al.FlingToken=nil al.TargetFollowEnabled=false if cX then cX:SetValue(false,true,true)end end end})local c4=ar:Columns({Ratio={1,1},Gap=8,StackOnCompact=true})
+c4:Column(1):Slider({Text='Orbit radius',Min=3,Max=30,Step=1,Default=al.TargetOrbitRadius,Suffix=' studs',Flag='OrbitRadius',Callback=function(c5)al.
+TargetOrbitRadius=c5 end})c4:Column(2):Slider({Text='Orbit speed',Min=0.25,Max=4,Step=0.25,Default=al.TargetOrbitSpeed,Suffix='x',Flag='OrbitSpeed',Callback=
+function(c5)al.TargetOrbitSpeed=c5 end})ar:Button({Text='Stop target actions',Description=
+[[Stop follow, orbit, fling and spectating, then restore the local camera.]],Icon='square-stop',Callback=function()c0()aF('Target actions stopped','Info')end})
+ar:Divider()ar:BoldLabel({Text='Session'})ar:Button({Text='Rejoin current server',Description='Reconnect this client to the current server instance.',Icon=
+'rotate-cw',Callback=function()u:TeleportToPlaceInstance(game.PlaceId,game.JobId,H)end})ar:Button({Text='Join a different public server',Description=
+'Find a non-full public server for this place.',Icon='shuffle',Callback=function()task.spawn(function()aF('Searching for a public server\u{2026}')local c5=''for
+c6=1,8 do local c7=string.format([[https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Asc&limit=100%s]],game.PlaceId,c5~=''and'&cursor='..t:
+UrlEncode(c5)or'')local c8,c9=pcall(game.HttpGet,game,c7)if not c8 then aE('ERROR',c9)aF('Server search failed','Error')return end local da,db=pcall(t.
+JSONDecode,t,c9)if not da or type(db)~='table'then aE('ERROR',db)aF('Server response could not be decoded','Error')return end for dc,dd in ipairs(db.data or{})
+do if dd.id~=game.JobId and dd.playing<dd.maxPlayers then u:TeleportToPlaceInstance(game.PlaceId,dd.id,H)return end end c5=db.nextPageCursor or''if c5==''then
+break end end aF('No available public server was found','Warning')end)end})local c5=ar:Columns({Ratio={1,1,1},Gap=8,StackOnCompact=true})c5:Column(1):Button({
+Text='Copy PlaceId',Callback=function()cR('PlaceId',game.PlaceId)end})c5:Column(2):Button({Text='Copy JobId',Callback=function()cR('JobId',game.JobId)end})c5:
+Column(3):Button({Text='Copy UserId',Callback=function()cR('UserId',H.UserId)end})as:Button({Text='Clear console',Description='Clear captured hub output.',Icon=
+'trash-2',Callback=function()al.OutputLines={}aD()aF('Console cleared')end})at:BoldLabel({Text='Interface'})at:Label({Text='<b>Forge visual system</b>',
+Description=[[The interface now uses one purpose-built Z-RAGE theme across every panel.]]})at:Slider({Text='UI scale',Min=0.75,Max=1.35,Step=0.05,Default=1,
+Suffix='x',Callback=function(c6)aj:SetScale(c6)end})at:Divider()at:BoldLabel({Text='Executor'})at:Toggle({Text='Anti-AFK',Description=
+[[Use a local virtual input when Roblox reports the client as idle.]],Default=false,Flag='AntiAfk',Callback=function(c6)al.AntiAfkEnabled=c6 end})local c6=at:
+Input({Text='FPS cap',Description='Uses setfpscap when supported by the executor.',Default='60',Numeric=true,ClearTextOnFocus=false})ab(c6,140,9)at:Button({Text
+='Apply FPS cap',Icon='gauge',Callback=function()local c7=M('setfpscap')if not c7 then aF('setfpscap is unavailable','Warning')return end local c8=math.max(1,
+tonumber(c6:GetValue())or 60)local c9,da=pcall(c7,c8)if c9 then aF('FPS cap set to '..c8,'Success')else aE('ERROR',da)end end})at:Button({Text=
+'Open command palette',Description='Search every hub tab and control.',Icon='search',Callback=function()aj:OpenCommandPalette()end})at:Button({Text='Unload hub'
+,Description='Restore managed client changes and destroy the interface.',Icon='power',Callback=function()al:Destroy()end})at:Label({Text=
+'Toggle key: <b>Right Control</b>',Description=[[This is a client-only executor script. It creates no remotes and sends no server execution requests.]]})au(r.
+JumpRequest:Connect(function()if al.InfiniteJumpEnabled then local c7=aw()if c7 then c7:ChangeState(Enum.HumanoidStateType.Jumping)end end end))au(q.Stepped:
+Connect(function()if al.NoclipEnabled then local c7=av()if c7 then for c8,c9 in ipairs(c7:GetDescendants())do if c9:IsA('BasePart')then if Y[c9]==nil then Y[c9]
+=c9.CanCollide end c9.CanCollide=false end end end end if al.MovementLockEnabled then _()end end))au(q.RenderStepped:Connect(function(c7)if al.FlyEnabled then
+local c8=ax()local c9=workspace.CurrentCamera if not c8 or not c9 or not aR or not aS then aV()else local da=Vector3.zero if r:IsKeyDown(Enum.KeyCode.W)then da
++=c9.CFrame.LookVector end if r:IsKeyDown(Enum.KeyCode.S)then da-=c9.CFrame.LookVector end if r:IsKeyDown(Enum.KeyCode.D)then da+=c9.CFrame.RightVector end if r
+:IsKeyDown(Enum.KeyCode.A)then da-=c9.CFrame.RightVector end if r:IsKeyDown(Enum.KeyCode.Space)then da+=Vector3.yAxis end if r:IsKeyDown(Enum.KeyCode.
+LeftControl)then da-=Vector3.yAxis end aR.Velocity=da.Magnitude>0 and da.Unit*al.FlySpeed or Vector3.zero aS.CFrame=CFrame.lookAt(c8.Position,c8.Position+c9.
+CFrame.LookVector)end end if al.TargetFollowEnabled or al.TargetOrbitEnabled then local c8=cW()local c9=c8 and c8.Character and c8.Character:FindFirstChild(
+'HumanoidRootPart')local da=ax()if c9 and c9:IsA('BasePart')and da and da:IsA('BasePart')then if al.TargetOrbitEnabled then al.TargetOrbitAngle+=c7*al.
+TargetOrbitSpeed*math.pi local db=c9.Position local dc=Vector3.new(math.cos(al.TargetOrbitAngle)*al.TargetOrbitRadius,2,math.sin(al.TargetOrbitAngle)*al.
+TargetOrbitRadius)da.CFrame=CFrame.lookAt(db+dc,db)else da.CFrame=c9.CFrame*CFrame.new(0,0,al.TargetFollowDistance)end da.AssemblyLinearVelocity=Vector3.zero
+end end end))au(H.CharacterAdded:Connect(function(c7)task.wait(1.25)if c7==av()then bf(c7)end if al.AvatarDescription and al.AvatarHasEdits and c7==av()then bE(
+'Avatar restored after respawn',true)end if c7==av()then cg()bc()end if al.MovementLockEnabled then _()end if al.FlyEnabled then aW()end end))au(H.
+CharacterAppearanceLoaded:Connect(function(c7)if c7~=av()or not al.AvatarDescription or not al.AvatarHasEdits then return end task.delay(0.1,function()if not al
+.Destroyed and c7==av()then bE('Avatar appearance synchronized',true)end end)end))au(H.Idled:Connect(function()if not al.AntiAfkEnabled then return end pcall(
+function()A:Button2Down(Vector2.zero,workspace.CurrentCamera and workspace.CurrentCamera.CFrame or CFrame.new())task.wait(0.1)A:Button2Up(Vector2.zero,workspace
+.CurrentCamera and workspace.CurrentCamera.CFrame or CFrame.new())end)end))au(r.InputBegan:Connect(function(c7,c8)if al.Destroyed then return end local c9=r:
+GetFocusedTextBox()if c7.KeyCode==Enum.KeyCode.Return and(r:IsKeyDown(Enum.KeyCode.LeftControl)or r:IsKeyDown(Enum.KeyCode.RightControl))and(c9==nil or c9==aA.
+TextBox)then aJ(aG(),'ForgeEditor')return end if c8 then return end if c7.KeyCode==h then aj:ToggleVisibility()end end))function al:Destroy()if self.Destroyed
+then return end self.Destroyed=true if self.CurrentThread then pcall(task.cancel,self.CurrentThread)self.CurrentThread=nil end aV()c0()if self.
+AvatarInspectBridge and self.AvatarInspectBridge.Owner==self then self.AvatarInspectBridge.Handler=nil self.AvatarInspectBridge.Owner=nil end self.
+AvatarInspectBridge=nil if self.ChatIdentityBridge then local c7=self.ChatIdentityBridge pcall(function()if z.OnIncomingMessage==c7.Wrapper then z.
+OnIncomingMessage=c7.Previous end end)self.ChatIdentityBridge=nil end ci()pcall(bz,av())bA()if self.AvatarDescription then self.AvatarDescription:Destroy()self.
+AvatarDescription=nil end if self.AvatarOriginalDescription then self.AvatarOriginalDescription:Destroy()self.AvatarOriginalDescription=nil end self.
+NoclipEnabled=false for c7,c8 in pairs(Y)do if c7.Parent then c7.CanCollide=c8 end end for c7,c8 in pairs(X)do if c7.Parent then c7.WalkSpeed=c8.WalkSpeed c7.
+UseJumpPower=c8.UseJumpPower c7.JumpPower=c8.JumpPower end end cP(false)cQ(false)workspace.Gravity=cN.Gravity if workspace.CurrentCamera then workspace.
+CurrentCamera.FieldOfView=cN.FieldOfView local c7=aw()if c7 then workspace.CurrentCamera.CameraSubject=c7 end end for c7,c8 in pairs(cO)do if c7.Parent then c7.
+Enabled=c8 end end for c7,c8 in ipairs(self.Connections)do c8:Disconnect()end table.clear(self.Connections)if self.Menu then self.Menu:Destroy()end if rawget(K,
+'__ForgeUniversalDeveloperHub')==self then K.__ForgeUniversalDeveloperHub=nil end end aj:OnDestroy(function()if not al.Destroyed then al:Destroy()ah()end end)al
+.ForgeVisuals=ak aE('HUB','Loaded for',H.Name,'('..tostring(H.UserId)..')')aj:Notify({Title=b,Content='Client hub loaded. Press Right Control to toggle it.',
+Type='Success',Duration=4})end local function aj()local ak=U.Menu({Title=b,Theme=G,Size=UDim2.fromOffset(610,370),MinSize=Vector2.new(560,340),MaxSize=Vector2.
+new(680,420),Resizable=false,Responsive=true,Shadow=true,HasOutline=true})V(ak,'Forge Z')ad(ak)K.__ForgeUniversalKeyGate=ak local al=ak:Tab({Text='Access',Icon=
+'key-round'})al:BoldLabel({Text='Authentication required',Description='Enter the access key to unlock the client hub.'})al:Label({Text=
+'Enter the key below, then press Enter or click Unlock Hub.',Description='Authentication is case-sensitive.'})local am local an local ao=al:Input({Text=
+'Access key',Placeholder='Enter key',ClearTextOnFocus=false,Callback=function(ao,ap)if ap and am then am()end end})ao.TextBox.Size=UDim2.fromOffset(230,26)ao.
+TextBox.Position=UDim2.new(1,-242,0.5,-13)ao.Label.Size=UDim2.new(1,-260,0,20)ab(ao,nil,9)local ap=al:Label({Text='<b>Status:</b> Waiting for key',Description=
+'Successful authentication opens the full hub.'})local aq=false am=function()if aq then return end local ar=ao:GetValue():match('^%s*(.-)%s*$')if ar~=c then ap.
+SetText('<b>Status:</b> Invalid key')ao:SetValue('',true)if an then an:Reject()end ak:Notify({Title='Access denied',Content='The supplied key is incorrect.',
+Type='Error',Duration=3})return end aq=true ap.SetText('<b>Status:</b> Key accepted')ak:Notify({Title='Access granted',Content='Opening Forge Z v1\u{2026}',Type
+='Success',Duration=2})local as=function()if rawget(K,'__ForgeUniversalKeyGate')==ak then K.__ForgeUniversalKeyGate=nil end ak:Destroy()ag(ai)end if an then an:
+Exit(as)else task.delay(0.25,as)end end al:Button({Text='Unlock hub',Description='Validate the key and open the client UI.',Icon='lock-keyhole-open',Callback=am
+})an=aa(ak)ak:OnDestroy(function()if rawget(K,'__ForgeUniversalKeyGate')==ak then K.__ForgeUniversalKeyGate=nil end end)ak:Notify({Title='Key system',Content=
+'Enter your access key to continue.',Type='Info',Duration=3})end af(aj)
